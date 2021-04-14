@@ -2,3 +2,4 @@
 * text=auto
 *.bat linguist-detectable=false
 *.ps1 linguist-detectable=false
+*.html linguist-detectable=false

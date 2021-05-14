@@ -56,7 +56,7 @@ def register():
 
         if uc.getByID(nim) is not None:
             return render_template('register.html', message='ID already exists!')
-        u = Users(nim, name, generate_password_hash(password), gender)
+        u = Users(nim, name, gender, generate_password_hash(password))
         uc.insert(u)
         session['curr_user'] = u.user_name
         return redirect(url_for('index'))

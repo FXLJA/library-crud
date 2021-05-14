@@ -42,7 +42,7 @@ app.register_blueprint(usersView.blueprint)
 def index():
     bc = BooksController()
 
-    return render_template('index.html', books=bc.getAll())
+    return render_template('index.html', books=bc.getAll(), user_login=('curr_user' in session))
 
 
 @app.route('/register', methods=['GET', 'POST'])
@@ -78,6 +78,12 @@ def login():
         return redirect(url_for('index'))
     else:
         return render_template('login.html')
+
+
+@app.route('/logout')
+def logout():
+    session.clear()
+    return redirect(url_for('index'))
 
 
 if __name__ == '__main__':

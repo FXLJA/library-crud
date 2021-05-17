@@ -13,15 +13,15 @@ class UserController:
     @staticmethod
     def update(user: User):
         DBController.execute_and_commit(
-            "UPDATE user SET user_name = %s, user_gender = %s, password = %s WHERE user_id = %s",
+            "UPDATE user SET name = %s, password = %s, gender = %s WHERE username = %s",
             [user.user_name, user.password, user.user_gender, user.user_id]
         )
 
     @staticmethod
-    def delete(user_id):
+    def delete(username):
         DBController.execute_and_commit(
-            "DELETE FROM user WHERE user_id = %s",
-            [user_id]
+            "DELETE FROM user WHERE username = %s",
+            [username]
         )
 
     @staticmethod
@@ -38,7 +38,7 @@ class UserController:
     @staticmethod
     def getByID(user_id):
         result = DBController.query(
-            "SELECT * FROM user WHERE user_id = %s",
+            "SELECT * FROM user WHERE username = %s",
             [user_id]
         )
         u = None

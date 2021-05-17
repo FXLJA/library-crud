@@ -41,7 +41,7 @@ class CategoryController:
             "SELECT * FROM category WHERE category_id = %s",
             [category_id]
         )
-        a = None
+        c = None
         if result:
             category = result[0]
             c = Category(category[0], category[1])

@@ -17,7 +17,7 @@ class AdminController:
 
     def delete(self, username):
         DBController.execute_and_commit(
-            "DELETE FROM admin WHERE user_id = %s",
+            "DELETE FROM admin WHERE username = %s",
             [username]
         )
 

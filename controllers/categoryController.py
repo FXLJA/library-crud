@@ -2,7 +2,7 @@ from models.category import Category
 from dbController import DBController
 
 
-class AdminController:
+class CategoryController:
     @staticmethod
     def insert(category: Category):
         DBController.execute_and_commit(

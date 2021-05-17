@@ -10,6 +10,7 @@ from werkzeug.security import generate_password_hash
 import constants
 from views import booksView
 from views import usersView
+from views import categoryView
 from models.user import User
 from dbController import DBController
 from controllers.bookController import BookController
@@ -28,6 +29,7 @@ db.mysql.init_app(app)
 
 app.register_blueprint(booksView.blueprint)
 app.register_blueprint(usersView.blueprint)
+app.register_blueprint(categoryView.blueprint)
 
 
 @app.route('/')

@@ -13,7 +13,6 @@ from flask import redirect
 from flask import Blueprint
 from flask import render_template
 
-from models.book import Book
 from controllers.bookController import BookController
 
 

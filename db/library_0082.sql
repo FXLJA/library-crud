@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: May 16, 2021 at 08:40 PM
+-- Generation Time: May 17, 2021 at 04:44 PM
 -- Server version: 10.4.19-MariaDB
 -- PHP Version: 8.0.6
 
@@ -58,8 +58,8 @@ CREATE TABLE `borrow` (
   `book_id` varchar(10) DEFAULT NULL,
   `username` varchar(255) DEFAULT NULL,
   `secret_key` text DEFAULT NULL,
-  `borrow_date` datetime DEFAULT NULL,
-  `return_date` datetime DEFAULT NULL
+  `borrow_date` date DEFAULT NULL,
+  `return_date` date DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 -- --------------------------------------------------------
@@ -72,6 +72,14 @@ CREATE TABLE `category` (
   `category_id` varchar(10) NOT NULL,
   `category_name` varchar(30) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+--
+-- Dumping data for table `category`
+--
+
+INSERT INTO `category` (`category_id`, `category_name`) VALUES
+('123', 'apa'),
+('234', 'ngk');
 
 -- --------------------------------------------------------
 

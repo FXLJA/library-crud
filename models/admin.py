@@ -5,3 +5,7 @@ class Admin:
 
     def to_json(self):
         return {"Username": self.username, "Password": self.password}
+
+    @staticmethod
+    def get_types():
+        return ["str", "str"]

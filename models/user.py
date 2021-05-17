@@ -8,3 +8,7 @@ class User:
     def to_json(self):
         return {"ID": self.user_id, "Nama": self.user_name,
                 "Password": self.password, "Jenis Kelamin": self.user_gender}
+
+    @staticmethod
+    def get_types():
+        return ["str", "str", "str", "str"]

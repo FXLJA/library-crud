@@ -5,3 +5,7 @@ class Category:
 
     def to_json(self):
         return {"Category ID": self.category_id, "Category Name": self.category_name}
+
+    @staticmethod
+    def get_types():
+        return ["str", "str"]

@@ -4,4 +4,4 @@ class Admin:
         self.password = password
 
     def to_json(self):
-        return {"username": self.username, "password": self.password}
+        return {"Username": self.username, "Password": self.password}

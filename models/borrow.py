@@ -8,6 +8,6 @@ class Borrow:
         self.return_date = return_date
 
     def to_json(self):
-        return {"borrow id": self.borrow_id, "book id": self.book_id,
-                "username": self.username, "secret key": self.secret_key,
-                "borrow date": self.borrow_date, "return date": self.return_date}
+        return {"ID Peminjaman": self.borrow_id, "ID Buku": self.book_id,
+                "Peminjam": self.username, "Kode Pinjam": self.secret_key,
+                "Tanggal Pinjam": self.borrow_date, "Tanggal Kembali": self.return_date}

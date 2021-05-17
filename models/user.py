@@ -6,5 +6,5 @@ class User:
         self.user_gender = user_gender
 
     def to_json(self):
-        return {"user_id": self.user_id, "user_name": self.user_name,
-                "password": self.password, "user_gender": self.user_gender}
+        return {"ID": self.user_id, "Nama": self.user_name,
+                "Password": self.password, "Jenis Kelamin": self.user_gender}

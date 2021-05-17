@@ -1,12 +1,3 @@
-"""
-Class BooksController untuk mengendalikan operasi CRUD yang diterapkan pada model 'books' untuk objek buku.
-Class ini mengandung method untuk melakukan query SQL ke dalam database berupa:
-1. INSERT INTO untuk menambah data
-2. SELECT untuk menampilkan data
-3. UPDATE untuk memperbarui data
-4. DELETE untuk menghapus data
-"""
-
 from models.book import Book
 from dbController import DBController
 
@@ -18,7 +9,7 @@ class BookController:
             [book.book_id, book.title, book.author, book.thumbnail, book.file_path, book.book_category]
         )
 
-    def update(self, buku: Book):
+    def update(self, book: Book):
         DBController.execute_and_commit(
             "UPDATE book SET "
             "title = %s, "

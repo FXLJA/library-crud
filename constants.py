@@ -1,7 +1,3 @@
-"""
-Konstanta untuk konstruksi database
-"""
-
 DB_USERNAME = "root"
 DB_PASSWORD = ""
 DB_NAME = "library_0082"

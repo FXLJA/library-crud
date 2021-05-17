@@ -1,10 +1,3 @@
-"""
-Modul utama program. Mengandung seluruh alamat routing untuk semua halaman html yang ada dalam project.
-Seluruh komponen utama dari setiap modul digunakan disini, beserta semua layanan utama yang disediakan Flask.
-
-Instansiasi aplikasi ada dalam modul ini, beserta inisiasi database
-"""
-
 from flask import Flask
 from flask import url_for
 from flask import session

@@ -1,15 +1,3 @@
-"""
-Modul pengendali koneksi database. Seluruh method di dalam modul ini bersifat static, karena nilainya tidak akan
-mengalami perubahan selama aplikasi dijalankan.
-
-Database yang digunakan adalah MySQL melalui modul ekstensi PyMySQL (pip install pymysql)
-
-Variabel yang digunakan dalam modul ini adalah sebagai berikut:
-mysql: instansiasi dari class MySQL, memiliki kapabilitas koneksi database
-conn: indikator status koneksi, menjadi perantara dari controller untuk mengubah status koneksi database
-cursor: objek yang mampu menulis query ke dalam database, seperti kursor pada text editor
-"""
-
 from flaskext.mysql import MySQL
 
 

@@ -1,12 +1,3 @@
-"""
-Class UsersController untuk mengendalikan operasi CRUD yang diterapkan pada model 'users' untuk objek user.
-Class ini mengandung method untuk melakukan query SQL ke dalam database berupa:
-1. INSERT INTO untuk menambah data
-2. SELECT untuk menampilkan data
-3. UPDATE untuk memperbarui data
-4. DELETE untuk menghapus data
-"""
-
 from models.user import User
 from dbController import DBController
 

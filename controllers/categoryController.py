@@ -3,25 +3,29 @@ from dbController import DBController
 
 
 class AdminController:
-    def insert(self, category: Category):
+    @staticmethod
+    def insert(category: Category):
         DBController.execute_and_commit(
             "INSERT INTO category VALUES(%s, %s)",
             [category.category_id, category.category_name]
         )
 
-    def update(self, category: Category):
+    @staticmethod
+    def update(category: Category):
         DBController.execute_and_commit(
             "UPDATE category SET category_name = %s WHERE category_id = %s",
             [category.category_name, category.category_id]
         )
 
-    def delete(self, category_id):
+    @staticmethod
+    def delete(category_id):
         DBController.execute_and_commit(
             "DELETE FROM category WHERE category_id = %s",
             [category_id]
         )
 
-    def getAll(self):
+    @staticmethod
+    def getAll():
         result = DBController.query("SELECT * FROM category")
         categories = []
 
@@ -31,7 +35,8 @@ class AdminController:
 
         return categories
 
-    def getByID(self, category_id):
+    @staticmethod
+    def getByID(category_id):
         result = DBController.query(
             "SELECT * FROM category WHERE category_id = %s",
             [category_id]

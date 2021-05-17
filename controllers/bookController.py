@@ -3,13 +3,15 @@ from dbController import DBController
 
 
 class BookController:
-    def insert(self, book: Book):
+    @staticmethod
+    def insert(book: Book):
         DBController.execute_and_commit(
             "INSERT INTO book VALUES(%s, %s, %s, %s, %s, %s)",
             [book.book_id, book.title, book.author, book.thumbnail, book.file_path, book.book_category]
         )
 
-    def update(self, book: Book):
+    @staticmethod
+    def update(book: Book):
         DBController.execute_and_commit(
             "UPDATE book SET "
             "title = %s, "
@@ -21,13 +23,15 @@ class BookController:
             [book.title, book.author, book.thumbnail, book.file_path, book.book_category, book.book_id]
         )
 
-    def delete(self, book_id):
+    @staticmethod
+    def delete(book_id):
         DBController.execute_and_commit(
             "DELETE FROM book WHERE book_id = %s",
             [book_id]
         )
 
-    def getAll(self):
+    @staticmethod
+    def getAll():
         result = DBController.query("SELECT * FROM book")
         books = []
 
@@ -37,7 +41,8 @@ class BookController:
 
         return books
 
-    def getByID(self, book_id):
+    @staticmethod
+    def getByID(book_id):
         result = DBController.query(
             "SELECT * FROM book WHERE book_id = %s",
             [book_id]

@@ -3,14 +3,16 @@ from dbController import DBController
 
 
 class BorrowController:
-    def insert(self, borrow: Borrow):
+    @staticmethod
+    def insert(borrow: Borrow):
         DBController.execute_and_commit(
             "INSERT INTO borrow VALUES(%s, %s, %s, %s, %s, %s)",
             [borrow.borrow_id, borrow.book_id, borrow.username,
              borrow.secret_key, borrow.borrow_date, borrow.return_date]
         )
 
-    def update(self, borrow: Borrow):
+    @staticmethod
+    def update(borrow: Borrow):
         DBController.execute_and_commit(
             "UPDATE borrow SET "
             "book_id = %s, "
@@ -23,13 +25,15 @@ class BorrowController:
              borrow.borrow_date, borrow.return_date, borrow.borrow_id]
         )
 
-    def delete(self, borrow_id):
+    @staticmethod
+    def delete(borrow_id):
         DBController.execute_and_commit(
             "DELETE FROM borrow WHERE borrow_id = %s",
             [borrow_id]
         )
 
-    def getAll(self):
+    @staticmethod
+    def getAll():
         result = DBController.query("SELECT * FROM borrow")
         borrows = []
 
@@ -39,7 +43,8 @@ class BorrowController:
 
         return borrows
 
-    def getByID(self, borrow_id):
+    @staticmethod
+    def getByID(borrow_id):
         result = DBController.query(
             "SELECT * FROM borrow WHERE borrow_id = %s",
             [borrow_id]

@@ -3,25 +3,29 @@ from dbController import DBController
 
 
 class AdminController:
-    def insert(self, admin: Admin):
+    @staticmethod
+    def insert(admin: Admin):
         DBController.execute_and_commit(
             "INSERT INTO admin VALUES(%s, %s)",
             [admin.username, admin.password]
         )
 
-    def update(self, admin: Admin):
+    @staticmethod
+    def update(admin: Admin):
         DBController.execute_and_commit(
             "UPDATE admin SET password = %s WHERE username = %s",
             [admin.password, admin.username]
         )
 
-    def delete(self, username):
+    @staticmethod
+    def delete(username):
         DBController.execute_and_commit(
             "DELETE FROM admin WHERE username = %s",
             [username]
         )
 
-    def getAll(self):
+    @staticmethod
+    def getAll():
         result = DBController.query("SELECT * FROM admin")
         admins = []
 
@@ -31,7 +35,8 @@ class AdminController:
 
         return admins
 
-    def getByID(self, username):
+    @staticmethod
+    def getByID(username):
         result = DBController.query(
             "SELECT * FROM admin WHERE username = %s",
             [username]

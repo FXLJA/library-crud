@@ -1,14 +1,13 @@
 -- phpMyAdmin SQL Dump
--- version 4.9.0.1
+-- version 5.1.0
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Apr 04, 2021 at 05:40 PM
--- Server version: 10.4.6-MariaDB
--- PHP Version: 7.3.9
+-- Generation Time: May 16, 2021 at 08:40 PM
+-- Server version: 10.4.19-MariaDB
+-- PHP Version: 8.0.6
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
-SET AUTOCOMMIT = 0;
 START TRANSACTION;
 SET time_zone = "+00:00";
 
@@ -25,62 +24,121 @@ SET time_zone = "+00:00";
 -- --------------------------------------------------------
 
 --
--- Table structure for table `books`
+-- Table structure for table `admin`
 --
 
-CREATE TABLE `books` (
-  `book_id` varchar(10) NOT NULL,
-  `title` varchar(100) DEFAULT NULL,
-  `author` varchar(50) DEFAULT NULL,
-  `book_category` varchar(20) DEFAULT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
-
---
--- Dumping data for table `books`
---
-
-INSERT INTO `books` (`book_id`, `title`, `author`, `book_category`) VALUES
-('A003', 'The Maze Runner 3: The Death Cure', 'James Dashner', 'Action'),
-('E007', 'Merancang Applikasi Dengan Metodologi Extreme Programming', 'I Gusti Ngurah Suryantara', 'Education'),
-('F005', 'Percy Jackson & The Olympians: The Last Olympian', 'Rick Riordan', 'Fiction'),
-('F008', 'Imagine Me Gone', 'Adam Haslett', 'Fiction'),
-('H001', 'It', 'Stephen King', 'Horror');
+CREATE TABLE `admin` (
+  `username` varchar(255) NOT NULL,
+  `password` text NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 -- --------------------------------------------------------
 
 --
--- Table structure for table `users`
+-- Table structure for table `book`
 --
 
-CREATE TABLE `users` (
-  `user_id` varchar(10) NOT NULL,
-  `user_name` varchar(50) DEFAULT NULL,
-  `user_gender` varchar(10) DEFAULT NULL,
-  `password` text NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+CREATE TABLE `book` (
+  `book_id` varchar(255) NOT NULL,
+  `title` varchar(255) DEFAULT NULL,
+  `author` varchar(255) DEFAULT NULL,
+  `thumbnail` text DEFAULT NULL,
+  `file_path` text DEFAULT NULL,
+  `category_id` varchar(10) DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+-- --------------------------------------------------------
 
 --
--- Dumping data for table `users`
+-- Table structure for table `borrow`
 --
 
-INSERT INTO `users` (`user_id`, `user_name`, `user_gender`, `password`) VALUES
-('32180082', 'Jason Alexander', 'Pria', 'pbkdf2:sha256:150000$e5kIfSSA$b9f39c3ed54c5cab66ff9a868619c30a9d6598d5faf751795711dddce96a5768');
+CREATE TABLE `borrow` (
+  `borrow_id` varchar(10) NOT NULL,
+  `book_id` varchar(10) DEFAULT NULL,
+  `username` varchar(255) DEFAULT NULL,
+  `secret_key` text DEFAULT NULL,
+  `borrow_date` datetime DEFAULT NULL,
+  `return_date` datetime DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `category`
+--
+
+CREATE TABLE `category` (
+  `category_id` varchar(10) NOT NULL,
+  `category_name` varchar(30) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `user`
+--
+
+CREATE TABLE `user` (
+  `username` varchar(255) NOT NULL,
+  `name` varchar(255) NOT NULL,
+  `password` text NOT NULL,
+  `gender` text NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 --
 -- Indexes for dumped tables
 --
 
 --
--- Indexes for table `books`
+-- Indexes for table `admin`
 --
-ALTER TABLE `books`
-  ADD PRIMARY KEY (`book_id`);
+ALTER TABLE `admin`
+  ADD PRIMARY KEY (`username`);
 
 --
--- Indexes for table `users`
+-- Indexes for table `book`
 --
-ALTER TABLE `users`
-  ADD PRIMARY KEY (`user_id`);
+ALTER TABLE `book`
+  ADD PRIMARY KEY (`book_id`),
+  ADD KEY `category_id` (`category_id`);
+
+--
+-- Indexes for table `borrow`
+--
+ALTER TABLE `borrow`
+  ADD PRIMARY KEY (`borrow_id`),
+  ADD KEY `book_id` (`book_id`),
+  ADD KEY `username` (`username`);
+
+--
+-- Indexes for table `category`
+--
+ALTER TABLE `category`
+  ADD PRIMARY KEY (`category_id`);
+
+--
+-- Indexes for table `user`
+--
+ALTER TABLE `user`
+  ADD PRIMARY KEY (`username`);
+
+--
+-- Constraints for dumped tables
+--
+
+--
+-- Constraints for table `book`
+--
+ALTER TABLE `book`
+  ADD CONSTRAINT `book_ibfk_1` FOREIGN KEY (`category_id`) REFERENCES `category` (`category_id`);
+
+--
+-- Constraints for table `borrow`
+--
+ALTER TABLE `borrow`
+  ADD CONSTRAINT `borrow_ibfk_1` FOREIGN KEY (`book_id`) REFERENCES `book` (`book_id`),
+  ADD CONSTRAINT `borrow_ibfk_2` FOREIGN KEY (`username`) REFERENCES `user` (`username`);
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;

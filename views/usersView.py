@@ -10,10 +10,10 @@ NotFoundException: eksepsi ketika objek dengan primary key tertentu tidak ditemu
 from flask import Blueprint
 from flask import render_template
 
-from controllers.usersController import UsersController
+from controllers.userController import UserController
 
 blueprint = Blueprint("users", __name__, url_prefix="/users")
-uc = UsersController()
+uc = UserController()
 
 
 @blueprint.route('/add', methods=['GET', 'POST'])

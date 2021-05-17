@@ -17,10 +17,10 @@ from werkzeug.security import generate_password_hash
 import constants
 from views import booksView
 from views import usersView
-from models.users import Users
+from models.user import User
 from dbController import DBController
-from controllers.booksController import BooksController
-from controllers.usersController import UsersController
+from controllers.bookController import BookController
+from controllers.userController import UserController
 
 app = Flask(__name__)
 app.secret_key = constants.SECRET_KEY
@@ -40,7 +40,7 @@ app.register_blueprint(usersView.blueprint)
 @app.route('/')
 @app.route('/index')
 def index():
-    bc = BooksController()
+    bc = BookController()
 
     return render_template('index.html', books=bc.getAll(), user_login=('curr_user' in session))
 
@@ -52,11 +52,11 @@ def register():
         name = request.form['name']
         password = request.form['password']
         gender = request.form['gender']
-        uc = UsersController()
+        uc = UserController()
 
         if uc.getByID(nim) is not None:
             return render_template('register.html', message='ID already exists!')
-        u = Users(nim, name, gender, generate_password_hash(password))
+        u = User(nim, name, gender, generate_password_hash(password))
         uc.insert(u)
         session['curr_user'] = u.user_name
         return redirect(url_for('index'))
@@ -69,7 +69,7 @@ def login():
     if request.method == 'POST':
         nim = request.form['nim']
         password = request.form['password']
-        uc = UsersController()
+        uc = UserController()
 
         u = uc.getByID(nim)
         if u is None or check_password_hash(u.password, password) is False:

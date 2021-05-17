@@ -13,12 +13,12 @@ from flask import redirect
 from flask import Blueprint
 from flask import render_template
 
-from models.books import Books
-from controllers.booksController import BooksController
+from models.book import Book
+from controllers.bookController import BookController
 
 
 blueprint = Blueprint("books", __name__, url_prefix="/books")
-bc = BooksController()
+bc = BookController()
 
 
 @blueprint.route('/add', methods=['GET', 'POST'])
@@ -32,7 +32,7 @@ def add():
         if bc.getByID(book_id) is not None:
             return render_template('views/addBooks.html', message='ID already exists!')
 
-        b = Books(book_id, title, author, book_category)
+        b = Book(book_id, title, author, book_category)
         bc.insert(b)
 
         return redirect(url_for('index'))
@@ -65,7 +65,7 @@ def update_confirm():
     author = request.form['author']
     book_category = request.form['book_category']
 
-    b = Books(book_id, title, author, book_category)
+    b = Book(book_id, title, author, book_category)
     bc.update(b)
 
     return redirect(url_for('index'))

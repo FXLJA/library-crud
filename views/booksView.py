@@ -1,12 +1,3 @@
-"""
-Modul view untuk objek 'books'. Menangani perintah CRUD yang diberikan melalui user interface.
-Perintah CRUD akan dicocokkan dengan parameter yang ada pada modul 'models' ketika objek dikonstruksi.
-
-Modul ini juga memiliki penanganan exception handling untuk mencegah eksepsi sebagai berikut:
-DuplicateEntryException: eksepsi ketika terdeteksi entry dalam database yang memiliki nilai primary key yang sama
-NotFoundException: eksepsi ketika objek dengan primary key tertentu tidak ditemukan
-"""
-
 from flask import url_for
 from flask import request
 from flask import redirect

@@ -24,7 +24,7 @@ def add():
             item_ids = range(COL_COUNT)
             item_types = item.get_types()
             item_arr = [None] * COL_COUNT
-            return render_template('crud-default/add.html', message='ID already exists!', table_name=TABLE_NAME,
+            return render_template('crud-default/add.html', message='User already exists!', table_name=TABLE_NAME,
                                    item=zip(item_names, item_ids, item_types, item_arr))
 
         UserController.insert(item)

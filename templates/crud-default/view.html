@@ -41,16 +41,16 @@
         <table class="table">
             <thead>
             <tr>
-            {% for item_key in items[0].to_json().keys() %}
+                {% for item_key in items[0].to_json().keys() %}
                 <td>{{ item_key }}</td>
-            {% endfor %}
+                {% endfor %}
             </tr>
             </thead>
             <tbody>
             {% for item in items %}
             <tr>
                 {% for item_value in item.to_json().values() %}
-                    <td>{{ item_value }}</td>
+                <td>{{ item_value }}</td>
                 {% endfor %}
             </tr>
             {% endfor %}

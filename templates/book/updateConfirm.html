@@ -28,20 +28,17 @@
                                 <input id="author" name="author" type="text" placeholder="Author"
                                        value="{{book.author}}" class="form-control">
                                 <br>
+                                <input id="thumbnail" name="thumbnail" type="text" placeholder="Thumbnail"
+                                       class="form-control" value="{{book.thumbnail}}">
+                                <br>
+                                <input id="file_path" name="file_path" type="text" placeholder="Path File"
+                                       class="form-control" value="{{book.file_path}}">
+                                <br>
                                 <label for="book_category">Genre</label>
                                 <select name="book_category" id="book_category" class="form-control">
-                                    <option value="Action" {% if book.book_category==
-                                    "Action" %}selected{% endif %}>Action</option>
-                                    <option value="Fiction" {% if book.book_category==
-                                    "Fiction" %}selected{% endif %}>Fiction</option>
-                                    <option value="Horror" {% if book.book_category==
-                                    "Horror" %}selected{% endif %}>Horror</option>
-                                    <option value="Documentary" {% if book.book_category==
-                                    "Documentary" %}selected{% endif %}>Documentary</option>
-                                    <option value="Religious" {% if book.book_category==
-                                    "Religious" %}selected{% endif %}>Religious</option>
-                                    <option value="Education" {% if book.book_category==
-                                    "Education" %}selected{% endif %}>Education</option>
+                                    {% for category in list_category %}
+                                        <option value="{{ category.category_id }}" {% if book.book_category == category.category_id %}selected{% endif %}>{{ category.category_name }}</option>
+                                    {% endfor %}
                                 </select>
                                 <br>
                                 <div class="text-center">

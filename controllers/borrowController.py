@@ -17,9 +17,9 @@ class BorrowController:
             "UPDATE borrow SET "
             "book_id = %s, "
             "username = %s, "
-            "secret_key = %S, "
-            "borrow_date = %s "
-            "return_date = %s, "
+            "secret_key = %s, "
+            "borrow_date = %s, "
+            "return_date = %s "
             "WHERE borrow_id = %s",
             [borrow.book_id, borrow.username, borrow.secret_key,
              borrow.borrow_date, borrow.return_date, borrow.borrow_id]

@@ -83,29 +83,41 @@ def update():
         item = BorrowController.getByID(id)
 
         if item is None:
-            item = Borrow(*([None] * COL_COUNT))
-            item_names = list(item.to_json().keys())
-            return render_template('crud-default/update.html', table_name=TABLE_NAME, id_name=item_names[0],
+            return render_template('borrow/update.html', table_name=TABLE_NAME, id_name="Borrow ID",
                                    message=(TABLE_NAME + " not found"))
 
-        item_names = item.to_json().keys()
-        item_values = item.to_json().values()
-        item_ids = range(COL_COUNT)
-        item_types = item.get_types()
-        item_arr = [None] * COL_COUNT
+        list_user = UserController.getAll()
+        list_book = BookController.getAll()
 
-        return render_template('borrow/UpdateConfirm.html', table_name=TABLE_NAME,
-                               item=zip(item_names, item_values, item_ids, item_types, item_arr))
+        return render_template('borrow/UpdateConfirm.html', table_name=TABLE_NAME, borrow=item, list_user=list_user, list_book=list_book,
+                           )
 
-    item = Borrow(*([None] * COL_COUNT))
-    item_names = list(item.to_json().keys())
-
-    return render_template('borrow/update.html', table_name=TABLE_NAME, id_name=item_names[0])
+    return render_template('borrow/update.html', table_name=TABLE_NAME, id_name="Borrow ID")
 
 
 @blueprint.route('/update_confirm', methods=['POST'])
 def update_confirm():
     item = Borrow(*request.form.values())
+    print(item.username)
+    print(item.book_id)
+    print(item.borrow_id)
+    print(item.secret_key)
+    print(item.borrow_date)
+    print(item.return_date)
+
+    tgl_pinjam = datetime.fromisoformat(item.borrow_date)
+    tgl_kembali = datetime.fromisoformat(item.return_date)
+
+    if tgl_kembali < tgl_pinjam:
+        id = request.form['borrow_id']
+        item = BorrowController.getByID(id)
+
+        list_user = UserController.getAll()
+        list_book = BookController.getAll()
+
+        return render_template('borrow/updateConfirm.html', message='Masukkan tanggal yang benar!', borrow= item,table_name=TABLE_NAME,
+                               list_user=list_user, list_book=list_book, secret_key=secret_key)
+
     BorrowController.update(item)
     return redirect(url_for(TABLE_NAME + '.view'))
 

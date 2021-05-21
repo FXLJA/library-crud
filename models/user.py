@@ -11,4 +11,4 @@ class User:
 
     @staticmethod
     def get_types():
-        return ["str", "str", "str", "str"]
+        return ["str", "str", "password", "str"]

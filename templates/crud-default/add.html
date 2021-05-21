@@ -18,6 +18,10 @@
                                 <input id="{{ item_id }}" name="{{ item_id }}" type="text" placeholder="{{ item_name }}"
                                        class="form-control" required>
                                 {% endif %}
+                                {% if item_type == "password" %}
+                                <input id="{{ item_id }}" name="{{ item_id }}" type="password" placeholder="{{ item_name }}"
+                                       value="{{ item_value }}" class="form-control" required>
+                                {% endif %}
                                 {% if item_type == "arr" %}
                                 <label for="{{ item_name }}">{{ item_name }}</label>
                                 <select name="{{ item_name }}" id="{{ item_name }}" class="form-control" required>

@@ -8,4 +8,4 @@ class Admin:
 
     @staticmethod
     def get_types():
-        return ["str", "str"]
+        return ["str", "password"]

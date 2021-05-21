@@ -4,6 +4,10 @@ from flask import redirect
 from flask import Blueprint
 from flask import render_template
 
+import string
+import random
+from datetime import datetime
+
 from models.borrow import Borrow
 from controllers.bookController import BookController
 from controllers.userController import UserController
@@ -17,25 +21,30 @@ blueprint = Blueprint(TABLE_NAME, __name__, url_prefix=("/" + TABLE_NAME))
 
 @blueprint.route('/add', methods=['GET', 'POST'])
 def add():
+    list_user = UserController.getAll()
+    list_book = BookController.getAll()
+    secret_key = ''.join(random.choices(string.ascii_uppercase + string.digits, k=10))
+
     if request.method == 'POST':
         item = Borrow(*request.form.values())
 
-        if BorrowController.getByID(request.form['0']) is not None:
-            return render_template('crud-default/add.html', message='Duplicate order ID', )
+        if BorrowController.getByID(request.form['borrow_id']) is not None:
+            return render_template('borrow/add.html', message='Duplicate order ID', table_name=TABLE_NAME,
+                                   list_user=list_user, list_book=list_book, secret_key=secret_key)
+
+        tgl_pinjam = datetime.fromisoformat(item.borrow_date)
+        tgl_kembali = datetime.fromisoformat(item.return_date)
+
+        if tgl_kembali < tgl_pinjam:
+            return render_template('borrow/add.html', message='Masukkan tanggal yang benar!', table_name=TABLE_NAME,
+                                   list_user=list_user, list_book=list_book, secret_key=secret_key)
 
         BorrowController.insert(item)
 
         return redirect(url_for(TABLE_NAME + '.view'))
 
-    item_arr[1] = {}
-    for b in BookController.getAll():
-        item_arr[1].append(b.to_json())
-
-    item_arr[2] = {}
-    for u in UserController.getAll():
-        item_arr[2].append(u.to_json())
-
-    return render_template('crud-default/add.html', table_name=TABLE_NAME, )
+    return render_template('borrow/add.html', table_name=TABLE_NAME, list_user=list_user, list_book=list_book,
+                           secret_key=secret_key)
 
 
 @blueprint.route('/view')
@@ -64,7 +73,7 @@ def view():
 
         items.append(item)
 
-    return render_template('crud-default/view.html', table_name=TABLE_NAME, items=items)
+    return render_template('borrow/view.html', table_name=TABLE_NAME, items=items)
 
 
 @blueprint.route('/update', methods=['GET', 'POST'])
@@ -85,13 +94,13 @@ def update():
         item_types = item.get_types()
         item_arr = [None] * COL_COUNT
 
-        return render_template('crud-default/UpdateConfirm.html', table_name=TABLE_NAME,
+        return render_template('borrow/UpdateConfirm.html', table_name=TABLE_NAME,
                                item=zip(item_names, item_values, item_ids, item_types, item_arr))
 
     item = Borrow(*([None] * COL_COUNT))
     item_names = list(item.to_json().keys())
 
-    return render_template('crud-default/update.html', table_name=TABLE_NAME, id_name=item_names[0])
+    return render_template('borrow/update.html', table_name=TABLE_NAME, id_name=item_names[0])
 
 
 @blueprint.route('/update_confirm', methods=['POST'])
@@ -108,16 +117,11 @@ def delete():
         item = BorrowController.getByID(id)
 
         if item is None:
-            item = Borrow(*([None] * COL_COUNT))
-            item_names = list(item.to_json().keys())
-            return render_template('crud-default/delete.html', table_name=TABLE_NAME, id_name=item_names[0],
+            return render_template('borrow/delete.html', table_name=TABLE_NAME, id_name="Borrow ID",
                                    message=(TABLE_NAME + " not found"))
 
         BorrowController.delete(id)
 
         return redirect(url_for(TABLE_NAME + '.view'))
 
-    item = Borrow(*([None] * COL_COUNT))
-    item_names = list(item.to_json().keys())
-
-    return render_template('crud-default/delete.html', table_name=TABLE_NAME, id_name=item_names[0])
+    return render_template('borrow/delete.html', table_name=TABLE_NAME, id_name="Borrow ID")

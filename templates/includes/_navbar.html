@@ -7,6 +7,9 @@
             <li class="active"><a href="/">TIB25 - PEMROGRAMAN WEB FRAMEWORK</a></li>
         </ul>
         <ul class="nav navbar-nav navbar-right">
+            {% if not user_login %}
+            <li><a href="/admin/view"><span class="glyphicon glyphicon-sunglasses"></span> Admin</a></li>
+            {% endif %}
             <li><a href="/register"><span class="glyphicon glyphicon-user"></span> Register</a></li>
             {% if user_login %}
             <li><a href="logout"><span class="glyphicon glyphicon-log-out"></span> Logout</a></li>

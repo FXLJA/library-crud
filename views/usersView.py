@@ -3,6 +3,7 @@ from flask import request
 from flask import redirect
 from flask import Blueprint
 from flask import render_template
+from werkzeug.security import generate_password_hash
 
 from models.user import User
 from controllers.userController import UserController
@@ -27,6 +28,7 @@ def add():
             return render_template('crud-default/add.html', message='User already exists!', table_name=TABLE_NAME,
                                    item=zip(item_names, item_ids, item_types, item_arr))
 
+        item.password = generate_password_hash(item.password)
         UserController.insert(item)
 
         return redirect(url_for(TABLE_NAME + '.view'))
@@ -57,6 +59,7 @@ def update():
             return render_template('crud-default/update.html', table_name=TABLE_NAME, id_name=item_names[0],
                                    message=(TABLE_NAME + " not found"))
 
+        item.password = ""
         item_names = item.to_json().keys()
         item_values = item.to_json().values()
         item_ids = range(COL_COUNT)
@@ -75,6 +78,7 @@ def update():
 @blueprint.route('/update_confirm', methods=['POST'])
 def update_confirm():
     item = User(*request.form.values())
+    item.password = generate_password_hash(item.password)
     UserController.update(item)
     return redirect(url_for(TABLE_NAME + '.view'))
 

@@ -1,0 +1,68 @@
+{% extends 'layout.html' %}
+{% block title %} Home {% endblock %}
+{% block body %}
+
+<h2 style="text-align: center; font-weight: bold; margin-bottom:50px; color: #FDFDF5">Library CRUD Application</h2>
+
+<div class="container" style="margin-bottom: 50px">
+    <!-- Example row of columns -->
+    <h1>Tabel {{ table_name }}</h1>
+    <div class="row">
+        <div class="col-md-4 text-center">
+            <a href="/{{ table_name }}/add">
+                <button type="button" class="btn btn-success btn-lg" style="font-weight: bold; color: black">
+                    ADD
+                </button>
+            </a>
+        </div>
+        <div class="col-md-4 text-center">
+            <a href="/{{ table_name }}/update">
+                <button type="button" class="btn btn-warning btn-lg" style="font-weight: bold; color: black">
+                    UPDATE
+                </button>
+            </a>
+        </div>
+        <div class="col-md-4 text-center">
+            <a href="/{{ table_name }}/delete">
+                <button type="button" class="btn btn-danger btn-lg" style="font-weight: bold; color: black">
+                    DELETE
+                </button>
+            </a>
+        </div>
+    </div>
+</div>
+
+<!-- Main jumbotron for a primary marketing message or call to action -->
+<div class="jumbotron">
+    <div class="container">
+        {% if items | length < 1 %}
+        <p style="text-align: center">No {{ table_name }} in the Database</p>
+        {% else %}
+        <table class="table">
+            <thead>
+            <tr>
+                <td>ID Peminjaman</td>
+                <td>Nama Buku</td>
+                <td>Peminjam</td>
+                <td>Kunci Buku</td>
+                <td>Tanggal Pinjam</td>
+                <td>Tanggal Kembali</td>
+            </tr>
+            </thead>
+            <tbody>
+            {% for item in items %}
+            <tr>
+                <td>{{ item.borrow_id }}</td>
+                <td>{{ item.book_name }}</td>
+                <td>{{ item.user_name }}</td>
+                <td>{{ item.secret_key }}</td>
+                <td>{{ item.borrow_date }}</td>
+                <td>{{ item.return_date }}</td>
+            </tr>
+            {% endfor %}
+            </tbody>
+        </table>
+        {% endif %}
+    </div>
+</div>
+{% endblock %}

@@ -6,12 +6,3 @@ class Borrow:
         self.secret_key = secret_key
         self.borrow_date = borrow_date
         self.return_date = return_date
-
-    def to_json(self):
-        return {"ID Peminjaman": self.borrow_id, "ID Buku": self.book_id,
-                "Peminjam": self.username, "Kode Pinjam": self.secret_key,
-                "Tanggal Pinjam": self.borrow_date, "Tanggal Kembali": self.return_date}
-
-    @staticmethod
-    def get_types():
-        return ["str", "arr", "arr", "str", "date", "date"]

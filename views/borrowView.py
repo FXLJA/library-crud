@@ -5,10 +5,12 @@ from flask import Blueprint
 from flask import render_template
 
 from models.borrow import Borrow
+from controllers.bookController import BookController
+from controllers.userController import UserController
 from controllers.borrowController import BorrowController
 
 TABLE_NAME = "borrow"
-COL_COUNT = 4
+COL_COUNT = 6
 
 blueprint = Blueprint(TABLE_NAME, __name__, url_prefix=("/" + TABLE_NAME))
 
@@ -19,30 +21,50 @@ def add():
         item = Borrow(*request.form.values())
 
         if BorrowController.getByID(request.form['0']) is not None:
-            item = Borrow(*([None] * COL_COUNT))
-            item_names = item.to_json().keys()
-            item_ids = range(COL_COUNT)
-            item_types = item.get_types()
-            item_arr = [None] * COL_COUNT
-            return render_template('crud-default/add.html', message='Duplicate order ID', table_name=TABLE_NAME,
-                                   item=zip(item_names, item_ids, item_types, item_arr))
+            return render_template('crud-default/add.html', message='Duplicate order ID', )
 
         BorrowController.insert(item)
 
         return redirect(url_for(TABLE_NAME + '.view'))
-    else:
-        item = Borrow(*([None] * COL_COUNT))
-        item_names = item.to_json().keys()
-        item_ids = range(COL_COUNT)
-        item_types = item.get_types()
-        item_arr = [None] * COL_COUNT
-        return render_template('crud-default/add.html', table_name=TABLE_NAME,
-                               item=zip(item_names, item_ids, item_types, item_arr))
+
+    item_arr[1] = {}
+    for b in BookController.getAll():
+        item_arr[1].append(b.to_json())
+
+    item_arr[2] = {}
+    for u in UserController.getAll():
+        item_arr[2].append(u.to_json())
+
+    return render_template('crud-default/add.html', table_name=TABLE_NAME, )
 
 
 @blueprint.route('/view')
 def view():
-    return render_template('crud-default/view.html', table_name=TABLE_NAME, items=BorrowController.getAll())
+    items = []
+
+    list_borrow = BorrowController.getAll()
+    list_user = UserController.getAll()
+    list_book = BookController.getAll()
+
+    for borrow in list_borrow:
+        item = {}
+
+        item["borrow_id"] = borrow.borrow_id
+        item["secret_key"] = borrow.secret_key
+        item["borrow_date"] = borrow.borrow_date
+        item["return_date"] = borrow.return_date
+
+        for book in list_book:
+            if borrow.book_id == book.book_id:
+                item["book_name"] = book.title
+
+        for user in list_user:
+            if borrow.username == user.user_id:
+                item["user_name"] = user.user_name
+
+        items.append(item)
+
+    return render_template('crud-default/view.html', table_name=TABLE_NAME, items=items)
 
 
 @blueprint.route('/update', methods=['GET', 'POST'])

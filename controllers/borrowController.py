@@ -37,7 +37,7 @@ class BorrowController:
         result = DBController.query("SELECT * FROM borrow")
         borrows = []
 
-        for borrows in result:
+        for borrow in result:
             b = Borrow(borrow[0], borrow[1], borrow[2], borrow[3], borrow[4], borrow[5])
             borrows += [b]
 

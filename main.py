@@ -8,11 +8,14 @@ from werkzeug.security import check_password_hash
 from werkzeug.security import generate_password_hash
 
 import constants
+from dbController import DBController
+
+from models.user import User
 from views import booksView
 from views import usersView
+from views import adminView
+from views import borrowView
 from views import categoryView
-from models.user import User
-from dbController import DBController
 from controllers.bookController import BookController
 from controllers.userController import UserController
 
@@ -29,7 +32,9 @@ db.mysql.init_app(app)
 
 app.register_blueprint(booksView.blueprint)
 app.register_blueprint(usersView.blueprint)
+app.register_blueprint(borrowView.blueprint)
 app.register_blueprint(categoryView.blueprint)
+app.register_blueprint(adminView.blueprint)
 
 
 @app.route('/')
@@ -51,7 +56,7 @@ def register():
 
         if uc.getByID(nim) is not None:
             return render_template('register.html', message='ID already exists!')
-        u = User(nim, name, gender, generate_password_hash(password))
+        u = User(nim, name, generate_password_hash(password), gender)
         uc.insert(u)
         session['curr_user'] = u.user_name
         return redirect(url_for('index'))

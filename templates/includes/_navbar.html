@@ -9,8 +9,8 @@
         <ul class="nav navbar-nav navbar-right">
             {% if not user_login %}
             <li><a href="/admin/view"><span class="glyphicon glyphicon-sunglasses"></span> Admin</a></li>
-            {% endif %}
             <li><a href="/register"><span class="glyphicon glyphicon-user"></span> Register</a></li>
+            {% endif %}
             {% if user_login %}
             <li><a href="logout"><span class="glyphicon glyphicon-log-out"></span> Logout</a></li>
             {% else %}

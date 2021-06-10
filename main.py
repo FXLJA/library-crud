@@ -18,6 +18,7 @@ from views import borrowView
 from views import categoryView
 from controllers.bookController import BookController
 from controllers.userController import UserController
+from controllers.borrowController import BorrowController
 
 app = Flask(__name__)
 app.secret_key = constants.SECRET_KEY
@@ -84,6 +85,18 @@ def login():
 def logout():
     session.clear()
     return redirect(url_for('index'))
+
+
+@app.route('/borrow/add', methods=['GET', 'POST'])
+def addBorrow():
+    if request.method == 'POST':
+        borrow_id = request.form['borrow_id']
+        book_name = request.form['book_id']
+        user_id = request.form['user_id']
+        borrow_date = request.form['borrow_date']
+        return_date = request.form['return_date']
+        bc = BorrowController()
+
 
 
 if __name__ == '__main__':

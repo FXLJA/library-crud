@@ -3,43 +3,48 @@
 {% block title %} Register {% endblock %}
 
 {% block body %}
-<div class="container">
+<br>
+<div class="container" style="background-color:white;">
     <div class="row">
         <div class="col">
             <div class="well well-sm">
                 <form class="form-horizontal" method="post">
                     <fieldset>
-                        <legend class="text-center header">Create Account</legend>
+                        <legend class="text-center header">Register</legend>
                         <div class="text-center">
                             <img src="static/img/register.png" class="text-center"
                                  style="width: 300px; height: 300px;">
                         </div>
                         <br>
                         <div class="form-group">
-                            <div class="col-xs-4 col-md-offset-4">
-                                {% if message %}
-                                <div class="container mt-3 text-danger">
-                                    <h4 class="text-center">{{ message }}</h4>
-                                </div>
-                                {% endif %}
-                                <input id="id" name="nim" type="text" placeholder="NIM" class="form-control" required>
-                                <br>
-                                <input id="name" name="name" type="text" placeholder="Nama lengkap"
-                                       class="form-control" required>
-                                <br>
-                                <input id="password" name="password" type="password" placeholder="Password"
-                                       class="form-control" required>
-                                <br>
-                                <div class="input-group">
-                                    <p>Jenis kelamin:</p>
-                                    <input type="radio" id="male" name="gender" value="Pria" checked>
-                                    <label for="male" style="padding-left: 10px">Pria</label><br>
-                                    <input type="radio" id="female" name="gender" value="Wanita">
-                                    <label for="female" style="padding-left: 10px">Wanita</label><br>
-                                </div>
-                                <br>
-                                <div class="col-md-12 text-center">
-                                    <button type="submit" class="btn btn-primary btn-lg">Create Account</button>
+                            <div class="form-group row">
+                                <div class="col-4"></div>
+                                <div class="col-4">
+                                    {% if message %}
+                                    <div class="container mt-3 text-danger">
+                                        <h4 class="text-center">{{ message }}</h4>
+                                    </div>
+                                    {% endif %}
+                                    <input id="id" name="nim" type="text" placeholder="NIM" class="form-control"
+                                           required>
+                                    <br>
+                                    <input id="name" name="name" type="text" placeholder="Nama lengkap"
+                                           class="form-control" required>
+                                    <br>
+                                    <input id="password" name="password" type="password" placeholder="Password"
+                                           class="form-control" required>
+                                    <br>
+                                    <div class="input-group">
+                                        <p>Jenis kelamin: </p>
+                                        <input type="radio" id="male" name="gender" value="Pria" checked>
+                                        <label for="male" style="padding-left: 10px">Pria</label><br>
+                                        <input type="radio" id="female" name="gender" value="Wanita">
+                                        <label for="female" style="padding-left: 10px">Wanita</label><br>
+                                    </div>
+                                    <br>
+                                    <div class="col-md-12 text-center">
+                                        <button type="submit" class="btn btn-primary btn-lg">Create Account</button>
+                                    </div>
                                 </div>
                             </div>
                         </div>

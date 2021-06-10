@@ -1,6 +1,6 @@
 {% extends 'layout.html' %}
 
-{% block title %} Add Book {% endblock %}
+{% block title %} Update Book {% endblock %}
 
 {% block body %}
 <div class="container">
@@ -10,10 +10,13 @@
                 <form class="form-horizontal" method="post">
                     <fieldset>
                         <legend class="text-center header">Update Book Details</legend>
-                        <div class="col-xs-4 col-md-offset-4">
-                            <input id="fname" name="book_id" type="text" placeholder="Enter book ID"
-                                   class="form-control">
-                            <br>
+                        <div class="form-group row">
+                            <div class="col-4"></div>
+                            <div class="col-4">
+                                <input id="fname" name="book_id" type="text" placeholder="Enter book ID"
+                                       class="form-control">
+                                <br>
+                            </div>
                             {% if message %}
                             <div class="col-md-12 text-danger">
                                 <h4 class="text-center">{{ message }}</h4>

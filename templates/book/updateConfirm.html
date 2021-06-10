@@ -1,6 +1,6 @@
 {% extends 'layout.html' %}
 
-{% block title %} Add Book {% endblock %}
+{% block title %} Update Book {% endblock %}
 
 {% block body %}
 <div class="container">
@@ -15,8 +15,9 @@
                                  style="width: 300px; height: 300px; margin-left:100px">
                         </div>
                         <br>
-                        <div class="form-group">
-                            <div class="col-md-10 col-md-offset-1">
+                        <div class="form-group row">
+                            <div class="col-4"></div>
+                            <div class="col-4">
                                 <input type="text" placeholder="ID Buku" class="form-control"
                                        value="{{book.book_id}}" disabled>
                                 <input id="id" name="book_id" type="text"
@@ -37,7 +38,12 @@
                                 <label for="book_category">Genre</label>
                                 <select name="book_category" id="book_category" class="form-control">
                                     {% for category in list_category %}
-                                        <option value="{{ category.category_id }}" {% if book.book_category == category.category_id %}selected{% endif %}>{{ category.category_name }}</option>
+                                        <option value="{{ category.category_id }}"
+                                                {% if book.book_category == category.category_id %}
+                                                selected
+                                                {% endif %}>
+                                            {{ category.category_name }}
+                                        </option>
                                     {% endfor %}
                                 </select>
                                 <br>

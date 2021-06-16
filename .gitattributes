@@ -3,3 +3,4 @@
 *.bat linguist-detectable=false
 *.ps1 linguist-detectable=false
 *.html linguist-detectable=false
+*.css linguist-detectable=false

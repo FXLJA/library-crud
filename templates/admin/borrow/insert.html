@@ -1,0 +1,61 @@
+{% extends "base/nav_user.html" %}
+
+{% block title %}Borrow{% endblock %}
+
+{% block content %}
+    <div class="container my-5">
+        <h1>Borrow - Add</h1>
+    </div>
+    <div class="container my-5">
+
+        {% if list_book | length < 1 %}
+            <p>Tabel book Kosong! Tambah book terlebih dahulu!</p>
+        {% elif list_user | length < 1 %}
+            <p>Tabel user Kosong! Tambah user terlebih dahulu!</p>
+        {% else %}
+            <form method="post">
+                <div class="form-group mt-3">
+                    <h5>Borrow id</h5>
+                    <input type="text" name="borrow_id" class="form-control" required>
+                </div>
+                <div class="form-group mt-3">
+                    <h5>Book</h5>
+                    <select name="book_id" required>
+                        {% for book in list_book %}
+                            <option value="{{ book.book_id }}">{{ book.title }}</option>
+                        {% endfor %}
+                    </select>
+                </div>
+                <div class="form-group mt-3">
+                    <h5>User</h5>
+                    <select name="username" required>
+                        {% for user in list_user %}
+                            <option value="{{ user.username }}">{{ user.name }}</option>
+                        {% endfor %}
+                    </select>
+                </div>
+                <div class="form-group mt-3">
+                    <h5>Secret key</h5>
+                    <input type="text" name="secret_key" class="form-control" required>
+                </div>
+                <div class="form-group mt-3">
+                    <h5>Borrow date</h5>
+                    <input type="date" name="borrow_date" class="form-control" required>
+                </div>
+                <div class="form-group mt-3">
+                    <h5>Return date</h5>
+                    <input type="date" name="return_date" class="form-control" required>
+                </div>
+
+                {% if message %}
+                    <div class="conatiner mt-3 text-danger">
+                        <h5>{{ message }}</h5>
+                    </div>
+                {% endif %}
+                <div class="form-group mt-3">
+                    <button type="submit" class="btn btn-primary">Submit</button>
+                </div>
+            </form>
+        {% endif %}
+    </div>
+{% endblock %}

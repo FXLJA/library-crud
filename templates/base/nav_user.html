@@ -1,0 +1,15 @@
+{% extends "base/base.html" %}
+
+{% block navbar %}
+  <a class="p-2 text-white align-middle" href="/">Home</a>
+  <a class="p-2 text-white align-middle" href="/seminar/">Seminar</a>
+  <a class="p-2 text-white align-middle" href="/pengguna/">Pengguna</a>
+  <a class="p-2 text-white align-middle" href="/kategori/">Kategori</a>
+{% endblock %}
+
+{% block navbar_extra %}
+  <div class="container d-flex justify-content-end">
+    <p class="p-2 ml-5 text-white">Halo, {{ session.username }}</p>
+    <a class="p-2 ml-5 text-white" href="/logout">Log out</a>
+  </div>
+{% endblock %}

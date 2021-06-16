@@ -1,0 +1,63 @@
+{% extends "admin/layout.html" %}
+
+{% block title %}User{% endblock %}
+
+{% block nav_user %}active{% endblock nav_user %}
+
+{% block content %}
+<div class="container-fluid">
+    <!-- Page Heading -->
+    <div class="d-sm-flex align-items-center justify-content-between mb-4">
+        <h1 class="h3 mb-0 text-gray-800">User</h1>
+    </div>
+
+    {% if list_user | length < 1 %}
+    <div class="d-flex align-items-center justify-content-center" style="height: 60vh;">
+        <p class="h1 mb-4 font-weight-bold">No User Created</p>
+    </div>
+    {% else %}
+    <div class="row mb-4">
+        <div class="col-12 d-flex align-items-center justify-content-around">
+            <a class="btn btn-success" href="admin_user-insert.html" style="width: 6rem;">Add</a>
+            <a class="btn btn-warning" href="" style="width: 6rem;">Update</a>
+            <a class="btn btn-danger" href=""style="width: 6rem;">Delete</a>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-12">
+            <!-- DataTales Example -->
+            <div class="card mb-4">
+                <div class="card-header py-3">
+                    <h6 class="m-0 font-weight-bold text-primary">DataTables Example</h6>
+                </div>
+                <div class="card-body">
+                    <div class="table-responsive">
+                        <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
+                            <thead>
+                                <tr>
+                                    <th>Username</th>
+                                    <th>Name</th>
+                                    <th>Gender</th>
+                                    <th>Password</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                            {% for user in list_user %}
+                            <tr>
+                                <td>{{ user.username }}</td>
+                                <td>{{ user.name }}</td>
+                                <td>{{ user.gender }}</td>
+                                <td>{{ user.password }}</td>
+                            </tr>
+                            {% endfor %}
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    {% endif %}
+</div>
+{% endblock %}

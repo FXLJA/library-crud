@@ -1,3 +1,4 @@
+from my_database import MyDatabase
 from flask import Flask
 from flask import url_for
 from flask import session
@@ -8,17 +9,16 @@ from werkzeug.security import check_password_hash
 from werkzeug.security import generate_password_hash
 
 import constants
-from dbController import DBController
 
-from models.user import User
-from views import booksView
-from views import usersView
-from views import adminView
-from views import borrowView
-from views import categoryView
-from controllers.bookController import BookController
-from controllers.userController import UserController
-from controllers.borrowController import BorrowController
+from Models.user import User
+from Views import book_view
+from Views import user_view
+from Views import admin_view
+from Views import borrow_view
+from Views import category_view
+from Controllers.book_controller import BookController
+from Controllers.user_controller import UserController
+from Controllers.borrow_controller import BorrowController
 
 app = Flask(__name__)
 app.secret_key = constants.SECRET_KEY
@@ -28,22 +28,21 @@ app.config['MYSQL_DATABASE_PASSWORD'] = constants.DB_PASSWORD
 app.config['MYSQL_DATABASE_HOST'] = "localhost"
 app.config['MYSQL_DATABASE_DB'] = constants.DB_NAME
 
-db = DBController
-db.mysql.init_app(app)
+MyDatabase.mysql.init_app(app)
 
-app.register_blueprint(booksView.blueprint)
-app.register_blueprint(usersView.blueprint)
-app.register_blueprint(borrowView.blueprint)
-app.register_blueprint(categoryView.blueprint)
-app.register_blueprint(adminView.blueprint)
+app.register_blueprint(book_view.blueprint)
+app.register_blueprint(user_view.blueprint)
+app.register_blueprint(borrow_view.blueprint)
+app.register_blueprint(category_view.blueprint)
+app.register_blueprint(admin_view.blueprint)
 
 
 @app.route('/')
 @app.route('/index')
 def index():
     bc = BookController()
-
-    return render_template('index.html', books=bc.getAll(), user_login=('curr_user' in session))
+    session['admin'] = 'admin'
+    return render_template('index.html', books=bc.get_all(), user_login=('curr_user' in session))
 
 
 @app.route('/register', methods=['GET', 'POST'])
@@ -76,7 +75,7 @@ def login():
         if u is None or check_password_hash(u.password, password) is False:
             return render_template('login.html', message='Invalid credentials!')
         session['curr_user'] = u.user_name
-        return redirect(url_for('index'))
+        return redirect(url_for('user.view'))
     else:
         return render_template('login.html')
 
@@ -96,7 +95,6 @@ def addBorrow():
         borrow_date = request.form['borrow_date']
         return_date = request.form['return_date']
         bc = BorrowController()
-
 
 
 if __name__ == '__main__':

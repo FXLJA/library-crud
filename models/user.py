@@ -1,14 +1,8 @@
+# Class ini digunakan untuk menyimpan data User dari database library_0082
 class User:
-    def __init__(self, user_id, user_name, password, user_gender):
-        self.user_id = user_id
-        self.user_name = user_name
+    # Constructor ini digunakan untuk inisialiasi data dari class User
+    def __init__(self, username, name, password, gender):
+        self.username = username
+        self.name = name
         self.password = password
-        self.user_gender = user_gender
-
-    def to_json(self):
-        return {"ID": self.user_id, "Nama": self.user_name,
-                "Password": self.password, "Jenis Kelamin": self.user_gender}
-
-    @staticmethod
-    def get_types():
-        return ["str", "str", "password", "str"]
+        self.gender = gender

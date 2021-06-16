@@ -16,6 +16,10 @@ from Views import user_view
 from Views import admin_view
 from Views import borrow_view
 from Views import category_view
+
+from Views.UserViews import user_book_view
+from Views.UserViews import user_borrow_view
+
 from Controllers.book_controller import BookController
 from Controllers.user_controller import UserController
 from Controllers.borrow_controller import BorrowController
@@ -37,12 +41,17 @@ app.register_blueprint(category_view.blueprint)
 app.register_blueprint(admin_view.blueprint)
 
 
+#user blueprint
+app.register_blueprint(user_book_view.blueprint)
+app.register_blueprint(user_borrow_view.blueprint)
+
+
 @app.route('/')
 @app.route('/index')
 def index():
     bc = BookController()
     session['admin'] = 'admin'
-    return render_template('index.html', books=bc.get_all(), user_login=('curr_user' in session))
+    return redirect(url_for('user_book.view'))
 
 
 @app.route('/register', methods=['GET', 'POST'])

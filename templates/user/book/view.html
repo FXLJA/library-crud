@@ -1,0 +1,71 @@
+{% extends "user/layout.html" %}
+
+{% block title %}Book{% endblock %}
+
+{% block nav_book %}active{% endblock nav_book %}
+
+{% block content %}
+<div class="container-fluid">
+    <!-- Page Heading -->
+    <div class="d-sm-flex align-items-center justify-content-between mb-4">
+        <h1 class="h3 mb-0 text-gray-800">Book</h1>
+    </div>
+
+    {% if list_book | length < 1 %}
+    <div class="d-flex align-items-center justify-content-center" style="height: 60vh;">
+        <p class="h1 mb-4 font-weight-bold">No Book Added</p>
+    </div>
+    {% else %}
+    <div class="row">
+        <div class="col-12">
+            <!-- DataTales Example -->
+            <div class="card mb-4">
+                <div class="card-header py-3">
+                    <h6 class="m-0 font-weight-bold text-primary">Book List</h6>
+                </div>
+                <div class="card-body">
+                    <div class="table-responsive">
+                        <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
+                            <thead>
+                            <tr>
+                                <th>ID</th>
+                                <th>Title</th>
+                                <th>Author</th>
+                                <th>Category</th>
+                                <th>Thumbnail</th>
+
+                                <th>Action</th>
+
+                            </tr>
+                            </thead>
+                            <tbody>
+                            {% for book in list_book %}
+                                <tr>
+                                    <td class="align-middle">{{ book.book_id }}</td>
+                                    <td class="align-middle">{{ book.title }}</td>
+                                    <td class="align-middle">{{ book.author }}</td>
+                                     {% for category in list_category %}
+                                        {% if book.category_id == category.category_id %}
+                                            <td class="align-middle">{{ category.category_name }}</td>
+                                        {% endif %}
+                                    {% endfor %}
+                                    <td class="align-middle">{{ book.thumbnail }}</td>
+
+                                    <td class="align-middle">
+                                        <div class="d-flex align-items-center justify-content-center">
+                                            <a class="btn btn-success" href="" style="width: 6rem;">Borrow</a>
+                                        </div>
+                                    </td>
+
+                                </tr>
+                            {% endfor %}
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    {% endif %}
+</div>
+{% endblock %}

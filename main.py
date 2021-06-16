@@ -70,7 +70,7 @@ def register():
         session['curr_user'] = u.user_name
         return redirect(url_for('index'))
     else:
-        return render_template('register.html')
+        return render_template('auth/sign-up.html')
 
 
 @app.route('/login', methods=['GET', 'POST'])
@@ -86,7 +86,7 @@ def login():
         session['curr_user'] = u.user_name
         return redirect(url_for('user.view'))
     else:
-        return render_template('login.html')
+        return render_template('auth/sign-in.html')
 
 
 @app.route('/logout')

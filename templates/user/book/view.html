@@ -43,7 +43,10 @@
                                     {% endif %}
                                 {% endfor %}
 
-                                <td class="align-middle">{{ book.thumbnail }}</td>
+                                <td class="align-middle">
+                                    <img src="{{ url_for('static', filename=book.thumbnail) }}"
+                                         style="width:100px; height:auto;">
+                                </td>
                                 <td class="align-middle">
                                     <div class="d-flex align-items-center justify-content-center">
                                         <a class="btn btn-success" href="{{ url_for('user_borrow.insert') }}"

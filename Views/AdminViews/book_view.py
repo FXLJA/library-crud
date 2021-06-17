@@ -105,13 +105,31 @@ def update(id):
     book_id = BookController.get_by_id(id).book_id
     title = request.form['title']
     author = request.form['author']
-    thumbnail = request.form['thumbnail']
-    file_path = request.form['file_path']
+    thumbnail = request.file['thumbnail']
+    file_buku = request.file['file_path']
     category_id = request.form['category_id']
 
-    # Update data tersebut ke dalam database melalui model
-    book = Book(book_id, title, author, thumbnail, file_path, category_id)
+    if not allowed_file(thumbnail.filename, THUMBNAIL_EXTENSION):
+        return render_template('admin/book/insert.html', message="Ekstensi thumbnail salah!",
+                               list_category=CategoryController.get_all())
+
+    if not allowed_file(file_buku.filename, FILE_EXTENSION):
+        return render_template('user/book/insert.html', message="Ekstensi buku salah!",
+                               list_category=CategoryController.get_all())
+
+    pathlib.Path(constants.APP.root_path, 'static/thumbnails', book_id).mkdir(exist_ok=True, parents=True)
+    thumbnail.save(os.path.join('./static/thumbnails', book_id, secure_filename(thumbnail.filename)))
+
+    pathlib.Path(constants.APP.root_path, 'static/books', book_id).mkdir(exist_ok=True, parents=True)
+    file_buku.save(os.path.join('./static/books', book_id, secure_filename(file_buku.filename)))
+
+    # Jika data sudah sesuai, masukan data tersebut ke dalam database melalui model
+    book = Book(book_id, title, author, 'thumbnails/' + book_id + '/' + secure_filename(thumbnail.filename),
+                'books/' + book_id + '/' + secure_filename(file_buku.filename), category_id)
     BookController.update(book)
+
+    os.remove(constants.APP.route_path + '/static/' + BookController.get_by_id(book_id).thumbnail)
+    os.remove(constants.APP.route_path + '/static/' + BookController.get_by_id(book_id).file_path)
 
     # Redirect kembali ke view
     return redirect(url_for('book.view'))
@@ -127,6 +145,9 @@ def delete(id):
         if borrow.book_id == id:
             session['error'] = 'Buku sedang dipinjam!'
             return redirect(url_for('book.view'))
+
+    os.remove(constants.APP.route_path + '/static/' + BookController.get_by_id(id).thumbnail)
+    os.remove(constants.APP.route_path + '/static/' + BookController.get_by_id(id).file_path)
 
     # Hapus data tersebut dari database
     BookController.delete(id)

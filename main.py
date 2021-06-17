@@ -35,13 +35,14 @@ app.config['MYSQL_DATABASE_DB'] = constants.DB_NAME
 
 MyDatabase.mysql.init_app(app)
 
+# Admin blueprint
 app.register_blueprint(book_view.blueprint)
 app.register_blueprint(user_view.blueprint)
 app.register_blueprint(borrow_view.blueprint)
 app.register_blueprint(category_view.blueprint)
 app.register_blueprint(admin_view.blueprint)
 
-# user blueprint
+# User blueprint
 app.register_blueprint(user_book_view.blueprint)
 app.register_blueprint(user_borrow_view.blueprint)
 
@@ -57,17 +58,17 @@ def index():
 @app.route('/register', methods=['GET', 'POST'])
 def register():
     if request.method == 'POST':
-        nim = request.form['nim']
+        username = request.form['username']
         name = request.form['name']
         password = request.form['password']
         gender = request.form['gender']
         uc = UserController()
 
-        if uc.getByID(nim) is not None:
+        if uc.get_by_id(username) is not None:
             return render_template('auth/sign-up.html', message='ID already exists!')
-        u = User(nim, name, generate_password_hash(password), gender)
+        u = User(username, name, generate_password_hash(password), gender)
         uc.insert(u)
-        session['curr_user'] = u.user_name
+        session['curr_user'] = u.name
         return redirect(url_for('index'))
     else:
         return render_template('auth/sign-up.html')
@@ -76,15 +77,15 @@ def register():
 @app.route('/login', methods=['GET', 'POST'])
 def login():
     if request.method == 'POST':
-        nim = request.form['nim']
+        username = request.form['username']
         password = request.form['password']
         uc = UserController()
 
-        u = uc.getByID(nim)
+        u = uc.get_by_id(username)
         if u is None or check_password_hash(u.password, password) is False:
             return render_template('auth/sign-in.html', message='Invalid credentials!')
-        session['curr_user'] = u.user_name
-        return redirect(url_for('user.view'))
+        session['curr_user'] = u.username
+        return redirect(url_for('user_book.view'))
     else:
         return render_template('auth/sign-in.html')
 
@@ -93,17 +94,6 @@ def login():
 def logout():
     session.clear()
     return redirect(url_for('index'))
-
-
-@app.route('/borrow/add', methods=['GET', 'POST'])
-def addBorrow():
-    if request.method == 'POST':
-        borrow_id = request.form['borrow_id']
-        book_name = request.form['book_id']
-        user_id = request.form['user_id']
-        borrow_date = request.form['borrow_date']
-        return_date = request.form['return_date']
-        bc = BorrowController()
 
 
 if __name__ == '__main__':

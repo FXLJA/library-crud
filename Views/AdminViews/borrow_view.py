@@ -1,3 +1,6 @@
+import string
+import random
+
 from flask import request
 from flask import url_for
 from flask import session
@@ -36,20 +39,14 @@ def insert():
         return render_template("admin/borrow/insert.html", list_book=BookController.get_all(), list_user=UserController.get_all())
 
     # Jika metodenya adalah post, dapatkan data dari post
-    borrow_id = request.form['borrow_id']
     book_id = request.form['book_id']
     username = request.form['username']
-    secret_key = request.form['secret_key']
+    secret_key = ''.join(random.choices(string.ascii_uppercase + string.digits, k=10))
     borrow_date = request.form['borrow_date']
     return_date = request.form['return_date']
 
-    # Cek apakah borrow_id sudah ada dalam database
-    if BorrowController.get_by_id(borrow_id) is not None:
-        # jika iya, tampilkan error message
-        return render_template('admin/borrow/insert.html', message="borrow_id sudah pernah terdaftar!", list_book=BookController.get_all(), list_user=UserController.get_all())
-
     # Jika data sudah sesuai, masukan data tersebut ke dalam database melalui model
-    borrow = Borrow(borrow_id, book_id, username, secret_key, borrow_date, return_date)
+    borrow = Borrow(None, book_id, username, secret_key, borrow_date, return_date)
     BorrowController.insert(borrow)
 
     # Redirect ke halaman view

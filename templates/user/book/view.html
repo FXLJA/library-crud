@@ -49,7 +49,7 @@
                                 <td class="align-middle">{{ book.thumbnail }}</td>
                                 <td class="align-middle">
                                     <div class="d-flex align-items-center justify-content-center">
-                                        <a class="btn btn-success" href="" style="width: 6rem;">Borrow</a>
+                                        <a class="btn btn-success" href="{{ url_for('borrow.insert') }}" style="width: 6rem;">Borrow</a>
                                     </div>
                                 </td>
                             </tr>

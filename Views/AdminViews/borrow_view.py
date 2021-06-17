@@ -25,7 +25,8 @@ def view():
     if session.get('admin') is None:
         return redirect(url_for('index'))
     # Jika session admin ada, tampilkan halaman view
-    return render_template("admin/borrow/view.html", list_borrow=BorrowController.get_all(), list_book=BookController.get_all(), list_user=UserController.get_all())
+    return render_template("admin/borrow/view.html", list_borrow=BorrowController.get_all(),
+                           list_book=BookController.get_all(), list_user=UserController.get_all())
 
 
 # Routing untuk halaman insert
@@ -36,7 +37,8 @@ def insert():
         return redirect(url_for('index'))
     # Jika metodenya adalah get, tampilkan halaman insert
     if request.method == 'GET':
-        return render_template("admin/borrow/insert.html", list_book=BookController.get_all(), list_user=UserController.get_all())
+        return render_template("admin/borrow/insert.html", list_book=BookController.get_all(),
+                               list_user=UserController.get_all())
 
     # Jika metodenya adalah post, dapatkan data dari post
     book_id = request.form['book_id']
@@ -61,7 +63,8 @@ def update(id):
         return redirect(url_for('index'))
     # Jika metodenya adalah get, tampilkan halaman update
     if request.method == 'GET':
-        return render_template("admin/borrow/update.html", borrow=BorrowController.get_by_id(id), list_book=BookController.get_all(), list_user=UserController.get_all())
+        return render_template("admin/borrow/update.html", borrow=BorrowController.get_by_id(id),
+                               list_book=BookController.get_all(), list_user=UserController.get_all())
 
     # Jika metodenya adalah post, dapatkan data dari post
     borrow_id = BorrowController.get_by_id(id).borrow_id

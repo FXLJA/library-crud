@@ -8,11 +8,9 @@ from flask import render_template
 from Models.admin import Admin
 from Controllers.admin_controller import AdminController
 
-# Insialisasi Blueprint dengan url_prefix admin
 blueprint = Blueprint("admin", __name__, url_prefix="/admin/admin")
 
 
-# Routing untuk ke halaman view
 @blueprint.route('/')
 @blueprint.route('/view')
 def view():
@@ -23,12 +21,12 @@ def view():
     return render_template("Views/admin/view.html", list_admin=AdminController.get_all())
 
 
-# Routing untuk halaman insert
 @blueprint.route('/insert', methods=['GET', 'POST'])
 def insert():
     # Jika session admin tidak ada, redirect kembali ke index
     if session.get('admin') is None:
         return redirect(url_for('index'))
+
     # Jika metodenya adalah get, tampilkan halaman insert
     if request.method == 'GET':
         return render_template("Views/admin/insert.html")

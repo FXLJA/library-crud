@@ -11,6 +11,7 @@
                 <h1 class="h3 mb-0 font-weight-bold text-gray-800">Add Book</h1>
             </div>
             <form class="" method="post" enctype="multipart/form-data">
+
                 <div class="form-group">
                     <label>Book ID</label>
                     <input class="form-control" name="book_id" type="text" value="{{ book.book_id }}" disabled>
@@ -40,8 +41,11 @@
                     <label>Category</label>
                     <select class="form-control" name="category_id" required>
                         {% for category in list_category %}
-                        <option value="{{ category.category_id }}" {% if book.category_id== category.category_id
-                                %}selected{% endif %}>{{ category.category_name }}
+                        <option value="{{ category.category_id }}"
+                            {% if book.category_id== category.category_id %}
+                            selected
+                            {% endif %}>
+                            {{ category.category_name }}
                         </option>
                         {% endfor %}
                     </select>

@@ -23,7 +23,6 @@
     {% else %}
     <div class="row">
         <div class="col-12">
-            <!-- DataTales Example -->
             <div class="card mb-4">
                 <div class="card-body">
                     <div class="table-responsive">
@@ -48,9 +47,9 @@
                                 <td class="align-middle">{{ book.author }}</td>
 
                                 {% for category in list_category %}
-                                {% if book.category_id == category.category_id %}
-                                <td class="align-middle">{{ category.category_name }}</td>
-                                {% endif %}
+                                    {% if book.category_id == category.category_id %}
+                                    <td class="align-middle">{{ category.category_name }}</td>
+                                    {% endif %}
                                 {% endfor %}
 
                                 <td class="align-middle">
@@ -79,7 +78,6 @@
                                 </td>
                             </tr>
                             {% endfor %}
-
                             </tbody>
                         </table>
                     </div>

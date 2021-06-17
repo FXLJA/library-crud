@@ -2,7 +2,6 @@ from my_database import MyDatabase
 from Models.admin import Admin
 
 
-# Sebuah Controller untuk mengakses Tabel admin pada database library_0082
 class AdminController:
     # Fungsi insert digunakan untuk memasukan data ke Tabel admin dalam database library_0082
     @staticmethod

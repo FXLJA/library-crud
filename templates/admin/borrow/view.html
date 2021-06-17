@@ -7,7 +7,7 @@
     <!-- Page Heading -->
     <div class="d-sm-flex align-items-center justify-content-between mb-4">
         <h1 class="h3 mb-0 text-gray-800">Borrows</h1>
-        <a class="btn btn-success" href="" style="width: 6rem;">Add</a>
+        <a class="btn btn-success" href="{{ url_for('borrow.insert') }}" style="width: 6rem;">Add</a>
     </div>
 
     {% if list_borrow | length < 1 %}
@@ -37,8 +37,16 @@
                             {% for borrow in list_borrow %}
                             <tr>
                                 <td class="align-middle">{{ borrow.borrow_id }}</td>
-                                <td class="align-middle">{{ book.title }}</td>
-                                <td class="align-middle">{{ user.name }}</td>
+                                {% for book in list_book %}
+                                    {% if book.book_id == borrow.book_id  %}
+                                        <td class="align-middle">{{ book.title }}</td>
+                                    {% endif %}
+                                {% endfor %}
+                                {% for user in list_user %}
+                                    {% if user.username == borrow.username  %}
+                                        <td class="align-middle">{{ user.name }}</td>
+                                    {% endif %}
+                                {% endfor %}
                                 <td class="align-middle">{{ borrow.secret_key }}</td>
                                 <td class="align-middle">{{ borrow.borrow_date }}</td>
                                 <td class="align-middle">{{ borrow.return_date }}</td>

@@ -62,7 +62,7 @@ def update(id):
         return render_template("admin/borrow/update.html", borrow=BorrowController.get_by_id(id), list_book=BookController.get_all(), list_user=UserController.get_all())
 
     # Jika metodenya adalah post, dapatkan data dari post
-    borrow_id = request.form['borrow_id']
+    borrow_id = BorrowController.get_by_id(id).borrow_id
     book_id = request.form['book_id']
     username = request.form['username']
     secret_key = request.form['secret_key']
@@ -78,7 +78,7 @@ def update(id):
 
 
 # Routing untuk halaman delete
-@blueprint.route('/delete/<id>', methods=['POST'])
+@blueprint.route('/delete/<id>', methods=['POST', 'GET'])
 def delete(id):
     # Jika session admin tidak ada, redirect kembali ke home
     if session.get('admin') is None:

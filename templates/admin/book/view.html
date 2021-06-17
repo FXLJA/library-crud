@@ -7,7 +7,7 @@
     <!-- Page Heading -->
     <div class="d-sm-flex align-items-center justify-content-between mb-4">
         <h1 class="h3 mb-0 text-gray-800">Book</h1>
-        <a class="btn btn-success" href="" style="width: 6rem;">Add</a>
+        <a class="btn btn-success" href="{{ url_for('book.insert') }}" style="width: 6rem;">Add</a>
     </div>
 
     {% if list_book | length < 1 %}
@@ -41,9 +41,9 @@
                                 <td class="align-middle">{{ book.title }}</td>
                                 <td class="align-middle">{{ book.author }}</td>
                                 {% for category in list_category %}
-                                {% if book.category_id == category.category_id %}
-                                <td class="align-middle">{{ category.category_name }}</td>
-                                {% endif %}
+                                    {% if book.category_id == category.category_id %}
+                                        <td class="align-middle">{{ category.category_name }}</td>
+                                    {% endif %}
                                 {% endfor %}
                                 <td class="align-middle">{{ book.thumbnail }}</td>
                                 <td class="align-middle">{{ book.file_path }}</td>

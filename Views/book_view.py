@@ -63,7 +63,7 @@ def update(id):
                                list_category=CategoryController.get_all())
 
     # Jika metodenya adalah post, dapatkan data dari post
-    book_id = request.form['book_id']
+    book_id = BookController.get_by_id(id).book_id
     title = request.form['title']
     author = request.form['author']
     thumbnail = request.form['thumbnail']
@@ -79,7 +79,7 @@ def update(id):
 
 
 # Routing untuk halaman delete
-@blueprint.route('/delete/<id>', methods=['POST'])
+@blueprint.route('/delete/<id>', methods=['POST', 'GET'])
 def delete(id):
     # Jika session admin tidak ada, redirect kembali ke home
     if session.get('admin') is None:

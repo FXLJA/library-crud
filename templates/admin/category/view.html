@@ -7,7 +7,7 @@
     <!-- Page Heading -->
     <div class="d-sm-flex align-items-center justify-content-between mb-4">
         <h1 class="h3 mb-0 text-gray-800">Category</h1>
-        <a class="btn btn-success" href="" style="width: 6rem;">Add</a>
+        <a class="btn btn-success" href="{{ url_for('category.insert') }}" style="width: 6rem;">Add</a>
     </div>
 
     {% if list_category | length < 1 %}

@@ -56,7 +56,7 @@ def update(id):
         return render_template("admin/category/update.html", category=CategoryController.get_by_id(id))
 
     # Jika metodenya adalah post, dapatkan data dari post
-    category_id = request.form['category_id']
+    category_id = CategoryController.get_by_id(id).category_id
     category_name = request.form['category_name']
 
     # Update data tersebut ke dalam database melalui model
@@ -68,7 +68,7 @@ def update(id):
 
 
 # Routing untuk halaman delete
-@blueprint.route('/delete/<id>', methods=['POST'])
+@blueprint.route('/delete/<id>', methods=['POST', 'GET'])
 def delete(id):
     # Jika session admin tidak ada, redirect kembali ke home
     if session.get('admin') is None:

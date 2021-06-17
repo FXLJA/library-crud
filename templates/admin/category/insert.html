@@ -1,32 +1,32 @@
-{% extends "base/nav_user.html" %}
-{% block title %}Category{% endblock %}
+{% extends "admin/layout.html" %}
+{% block title %}Add Category{% endblock %}
+{% block nav_categories %}active{% endblock nav_categories %}
 {% block content %}
 
-<div class="container my-5">
-    <h1>Category - Add</h1>
-</div>
+<div class="container-fluid">
+    <div class="row">
+        <div class="col-3"></div>
+        <div class="col-6 align-self-center pt-2 pb-4 px-5">
+            <div class="d-sm-flex align-items-center justify-content-center mb-4">
+                <h1 class="h3 mb-0 font-weight-bold text-gray-800">Add Category</h1>
+            </div>
+            <form class="" method="post" enctype="multipart/form-data">
+                <div class="form-group">
+                    <label>Category ID</label>
+                    <input class="form-control" name="category_id" type="text" required>
+                </div>
 
-<div class="container my-5">
-    <form method="post">
-        <div class="form-group mt-3">
-            <h5>Category id</h5>
-            <input type="text" name="category_id" class="form-control" required>
-        </div>
+                <div class="form-group">
+                    <label>Category Name</label>
+                    <input class="form-control" name="category_name" type="text" required>
+                </div>
 
-        <div class="form-group mt-3">
-            <h5>Category name</h5>
-            <input type="text" name="category_name" class="form-control" required>
+                <button type="submit" value="add category" class="btn btn-primary btn-user btn-block mt-5">
+                    Submit
+                </button>
+            </form>
         </div>
-
-        {% if message %}
-        <div class="conatiner mt-3 text-danger">
-            <h5>{{ message }}</h5>
-        </div>
-        {% endif %}
-
-        <div class="form-group mt-3">
-            <button type="submit" class="btn btn-primary">Submit</button>
-        </div>
-    </form>
+        <div class="col-3"></div>
+    </div>
 </div>
 {% endblock %}

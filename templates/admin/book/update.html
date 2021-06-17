@@ -1,66 +1,56 @@
-{% extends "base/nav_user.html" %}
-{% block title %}Book{% endblock %}
+{% extends "admin/layout.html" %}
+{% block title %}Edit Book{% endblock %}
+{% block nav_book %}active{% endblock nav_book %}
 {% block content %}
 
-<div class="container my-5">
-    <h1>Book - Edit {{ book.book_id }}</h1>
-</div>
+<div class="container-fluid">
+    <div class="row">
+        <div class="col-3"></div>
+        <div class="col-6 align-self-center pt-2 pb-4 px-5">
+            <div class="d-sm-flex align-items-center justify-content-center mb-4">
+                <h1 class="h3 mb-0 font-weight-bold text-gray-800">Add Book</h1>
+            </div>
+            <form class="" method="post" enctype="multipart/form-data">
+                <div class="form-group">
+                    <label>Book ID</label>
+                    <input class="form-control" name="book_id" type="text" value="{{ book.book_id }}" disabled>
+                </div>
 
-<div class="container my-5">
+                <div class="form-group">
+                    <label>Title</label>
+                    <input class="form-control" name="title" type="text" value="{{ book.title }}" required>
+                </div>
 
-    {% if list_category | length < 1 %}
-    <p>Tabel category Kosong! Tambah category terlebih dahulu!</p>
-    {% else %}
+                <div class="form-group">
+                    <label>Author</label>
+                    <input class="form-control" name="author" type="text" value="{{ book.author }}" required>
+                </div>
 
-    <form method="post">
-        <div class="form-group mt-3">
-            <h5>Book id</h5>
-            <input type="text" name="book_id" class="form-control" value="{{ book.book_id }}" required>
+                <div class="form-group">
+                    <label>Thumbnail</label>
+                    <input class="form-control" name="thumbnail" type="text" value="{{ book.thumbnail }}" required>
+                </div>
+
+                <div class="form-group">
+                    <label>File Path</label>
+                    <input class="form-control" name="file_path" type="text" value="{{ book.file_path }}" required>
+                </div>
+
+                <div class="form-group">
+                    <label>Category</label>
+                    <select class="form-control"  name="category_id" required>
+                    {% for category in list_category %}
+                        <option value="{{ category.category_id }}" {% if book.category_id== category.category_id %}selected{% endif %}>{{ category.category_name }}</option>
+                    {% endfor %}
+                    </select>
+                </div>
+
+                <button type="submit" value="create user" class="btn btn-primary btn-user btn-block mt-5">
+                    Submit
+                </button>
+            </form>
         </div>
-
-        <div class="form-group mt-3">
-            <h5>Title</h5>
-            <input type="text" name="title" class="form-control" value="{{ book.title }}" required>
-        </div>
-
-        <div class="form-group mt-3">
-            <h5>Author</h5>
-            <input type="text" name="author" class="form-control" value="{{ book.author }}" required>
-        </div>
-
-        <div class="form-group mt-3">
-            <h5>Thumbnail</h5>
-            <input type="text" name="thumbnail" class="form-control" value="{{ book.thumbnail }}" required>
-        </div>
-
-        <div class="form-group mt-3">
-            <h5>File path</h5>
-            <input type="text" name="file_path" class="form-control" value="{{ book.file_path }}" required>
-        </div>
-
-        <div class="form-group mt-3">
-            <h5>Category</h5>
-            <select name="category_id" required>
-
-                {% for category in list_category %}
-                <option value="{{ category.category_id }}" {% if book.category_id== category.category_id %}selected{%
-                        endif %}>{{ category.category_name }}
-                </option>
-                {% endfor %}
-
-            </select>
-        </div>
-
-        {% if message %}
-        <div class="conatiner mt-3 text-danger">
-            <h5>{{ message }}</h5>
-        </div>
-        {% endif %}
-
-        <div class="form-group mt-3">
-            <button type="submit" class="btn btn-primary">Submit</button>
-        </div>
-    </form>
-    {% endif %}
+        <div class="col-3"></div>
+    </div>
 </div>
 {% endblock %}

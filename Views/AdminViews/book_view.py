@@ -1,9 +1,12 @@
+import os
+
 from flask import request
 from flask import url_for
 from flask import session
 from flask import redirect
 from flask import Blueprint
 from flask import render_template
+from werkzeug.utils import secure_filename
 
 from Models.book import Book
 from Controllers.book_controller import BookController
@@ -12,6 +15,9 @@ from Controllers.category_controller import CategoryController
 
 # Insialisasi Blueprint dengan url_prefix book
 blueprint = Blueprint("book", __name__, url_prefix="/admin/book")
+
+THUMBNAIL_EXTENSION = {'png', 'jpg', 'jpeg', 'svg', 'bmp'}
+FILE_EXTENSION = {'pdf', 'txt', 'docx'}
 
 
 # Routing untuk ke halaman view
@@ -43,8 +49,8 @@ def insert():
     book_id = request.form['book_id']
     title = request.form['title']
     author = request.form['author']
-    thumbnail = request.form['thumbnail']
-    file_path = request.form['file_path']
+    thumbnail = request.files['thumbnail']
+    file_buku = request.files['file_path']
     category_id = request.form['category_id']
 
     # Cek apakah book_id sudah ada dalam database
@@ -53,12 +59,29 @@ def insert():
         return render_template('admin/book/insert.html', message="book_id sudah pernah terdaftar!",
                                list_category=CategoryController.get_all())
 
+    if not allowed_file(thumbnail.filename, THUMBNAIL_EXTENSION):
+        return render_template('user/book/insert.html', message="Ekstensi thumbnail salah!",
+                               list_category=CategoryController.get_all())
+
+    if not allowed_file(file_buku.filename, FILE_EXTENSION):
+        return render_template('user/book/insert.html', message="Ekstensi buku salah!",
+                               list_category=CategoryController.get_all())
+
+    thumbnail.save(os.path.join('./static/thumbnails', secure_filename(thumbnail.filename)))
+    file_buku.save(os.path.join('./static/books', secure_filename(file_buku.filename)))
+
     # Jika data sudah sesuai, masukan data tersebut ke dalam database melalui model
-    book = Book(book_id, title, author, thumbnail, file_path, category_id)
+    book = Book(book_id, title, author, secure_filename(thumbnail.filename), secure_filename(file_buku.filename),
+                category_id)
     BookController.insert(book)
 
     # Redirect ke halaman view
     return redirect(url_for('book.view'))
+
+
+def allowed_file(filename, allowed_extension):
+    return '.' in filename and \
+           filename.rsplit('.', 1)[1].lower() in allowed_extension
 
 
 # Routing untuk halaman update

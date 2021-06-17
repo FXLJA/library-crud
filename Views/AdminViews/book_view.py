@@ -1,10 +1,13 @@
 import os
+import pathlib
+import constants
 
 from flask import request
 from flask import url_for
 from flask import session
 from flask import redirect
 from flask import Blueprint
+from flask import current_app
 from flask import render_template
 from werkzeug.utils import secure_filename
 
@@ -67,8 +70,11 @@ def insert():
         return render_template('user/book/insert.html', message="Ekstensi buku salah!",
                                list_category=CategoryController.get_all())
 
-    thumbnail.save(os.path.join('./static/thumbnails', secure_filename(thumbnail.filename)))
-    file_buku.save(os.path.join('./static/books', secure_filename(file_buku.filename)))
+    pathlib.Path(constants.APP.root_path, 'static/thumbnails', book_id).mkdir(exist_ok=True, parents=True)
+    thumbnail.save(os.path.join('./static/thumbnails', book_id, secure_filename(thumbnail.filename)))
+
+    pathlib.Path(constants.APP.root_path, 'static/books', book_id).mkdir(exist_ok=True, parents=True)
+    file_buku.save(os.path.join('./static/books', book_id, secure_filename(file_buku.filename)))
 
     # Jika data sudah sesuai, masukan data tersebut ke dalam database melalui model
     book = Book(book_id, title, author, secure_filename(thumbnail.filename), secure_filename(file_buku.filename),

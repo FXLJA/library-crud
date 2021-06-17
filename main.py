@@ -104,4 +104,5 @@ def logout():
 
 
 if __name__ == '__main__':
+    constants.APP = app
     app.run(debug=True)

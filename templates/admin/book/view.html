@@ -34,7 +34,7 @@
                                 <th>Author</th>
                                 <th>Category</th>
                                 <th>Thumbnail</th>
-                                <th>FIle Path</th>
+                                <th>File Path</th>
                                 <th>Action</th>
                             </tr>
                             </thead>
@@ -56,7 +56,11 @@
                                     <img src="{{ url_for('static', filename=book.thumbnail) }}"
                                          style="width:100px; height:auto;">
                                 </td>
-                                <td class="align-middle">{{ book.file_path }}</td>
+                                <td>
+                                    <span class="d-inline-block text-truncate" style="max-width: 100px">
+                                    {{ book.file_path }}
+                                    </span>
+                                </td>
                                 <td>
                                     <div class="d-flex flex-column justify-content-center">
                                         <!-- Update -->

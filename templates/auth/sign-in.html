@@ -19,7 +19,7 @@
     <link href="{{ url_for('static', filename='css/sb-admin-2.min.css') }}" rel="stylesheet">
 </head>
 
-<body class="bg-gradient-primary">
+<body style="background-color: #000080">
 <header>
     {% for message in get_flashed_messages() %}
     <div class="alert alert-danger alert-dismissible fade show text-center" role="alert">
@@ -67,7 +67,8 @@
                                         <input class="form-control form-control-user" type="password" name="password"
                                                placeholder="Password">
                                     </div>
-                                    <button type="submit" value="Log in" class="btn btn-primary btn-user btn-block">
+                                    <button type="submit" value="Log in" class="btn btn-user btn-block"
+                                            style="background-color: #000080; color:white; font-weight: bold;">
                                         Sign In
                                     </button>
                                 </form>

@@ -105,8 +105,8 @@ def update(id):
     book_id = BookController.get_by_id(id).book_id
     title = request.form['title']
     author = request.form['author']
-    thumbnail = request.file['thumbnail']
-    file_buku = request.file['file_path']
+    thumbnail = request.files['thumbnail']
+    file_buku = request.files['file_path']
     category_id = request.form['category_id']
 
     if not allowed_file(thumbnail.filename, THUMBNAIL_EXTENSION):
@@ -128,8 +128,8 @@ def update(id):
                 'books/' + book_id + '/' + secure_filename(file_buku.filename), category_id)
     BookController.update(book)
 
-    os.remove(constants.APP.route_path + '/static/' + BookController.get_by_id(book_id).thumbnail)
-    os.remove(constants.APP.route_path + '/static/' + BookController.get_by_id(book_id).file_path)
+    os.remove(constants.APP.root_path + '/static/' + BookController.get_by_id(book_id).thumbnail)
+    os.remove(constants.APP.root_path + '/static/' + BookController.get_by_id(book_id).file_path)
 
     # Redirect kembali ke view
     return redirect(url_for('book.view'))
@@ -146,8 +146,8 @@ def delete(id):
             session['error'] = 'Buku sedang dipinjam!'
             return redirect(url_for('book.view'))
 
-    os.remove(constants.APP.route_path + '/static/' + BookController.get_by_id(id).thumbnail)
-    os.remove(constants.APP.route_path + '/static/' + BookController.get_by_id(id).file_path)
+    os.remove(constants.APP.root_path + '/static/' + BookController.get_by_id(id).thumbnail)
+    os.remove(constants.APP.root_path + '/static/' + BookController.get_by_id(id).file_path)
 
     # Hapus data tersebut dari database
     BookController.delete(id)

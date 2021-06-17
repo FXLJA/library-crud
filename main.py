@@ -97,7 +97,7 @@ def login():
         return render_template('auth/sign-in.html')
 
 
-@app.route('/logout')
+@app.route('/auth/sign-out/')
 def logout():
     session.clear()
     return redirect(url_for('index'))

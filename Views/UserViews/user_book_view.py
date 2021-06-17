@@ -23,9 +23,9 @@ FILE_EXTENSION = {'pdf', 'txt', 'docx'}
 @blueprint.route('/')
 @blueprint.route('/view')
 def view():
-    # Jika session user tidak ada, redirect kembali ke home
-    if session.get('admin') is None:
-        return redirect(url_for('home'))
+    # Jika session user tidak ada, redirect kembali ke index
+    if session.get('curr_user') is None:
+        return redirect(url_for('index'))
     # Jika session user ada, tampilkan halaman view
     return render_template("user/book/view.html", list_book=BookController.get_all(),
                            list_category=CategoryController.get_all())
@@ -34,9 +34,9 @@ def view():
 # Routing untuk halaman insert
 @blueprint.route('/insert', methods=['GET', 'POST'])
 def insert():
-    # Jika session user tidak ada, redirect kembali ke home
+    # Jika session user tidak ada, redirect kembali ke index
     if session.get('admin') is None:
-        return redirect(url_for('home'))
+        return redirect(url_for('index'))
     # Jika metodenya adalah get, tampilkan halaman insert
     if request.method == 'GET':
         return render_template("user/book/insert.html", list_category=CategoryController.get_all())
@@ -83,9 +83,9 @@ def allowed_file(filename, allowed_extension):
 # Routing untuk halaman update
 @blueprint.route('/update/<id>', methods=['GET', 'POST'])
 def update(id):
-    # Jika session user tidak ada, redirect kembali ke home
+    # Jika session user tidak ada, redirect kembali ke index
     if session.get('admin') is None:
-        return redirect(url_for('home'))
+        return redirect(url_for('index'))
     # Jika metodenya adalah get, tampilkan halaman update
     if request.method == 'GET':
         return render_template("user/book/update.html", book=BookController.get_by_id(id),
@@ -110,9 +110,9 @@ def update(id):
 # Routing untuk halaman delete
 @blueprint.route('/delete/<id>', methods=['POST'])
 def delete(id):
-    # Jika session user tidak ada, redirect kembali ke home
+    # Jika session user tidak ada, redirect kembali ke index
     if session.get('admin') is None:
-        return redirect(url_for('home'))
+        return redirect(url_for('index'))
 
     # Hapus data tersebut dari database
     BookController.delete(id)

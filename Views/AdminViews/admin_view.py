@@ -16,9 +16,9 @@ blueprint = Blueprint("admin", __name__, url_prefix="/admin/admin")
 @blueprint.route('/')
 @blueprint.route('/view')
 def view():
-    # Jika session admin tidak ada, redirect kembali ke home
+    # Jika session admin tidak ada, redirect kembali ke index
     if session.get('admin') is None:
-        return redirect(url_for('home'))
+        return redirect(url_for('index'))
     # Jika session admin ada, tampilkan halaman view
     return render_template("Views/admin/view.html", list_admin=AdminController.get_all())
 
@@ -26,9 +26,9 @@ def view():
 # Routing untuk halaman insert
 @blueprint.route('/insert', methods=['GET', 'POST'])
 def insert():
-    # Jika session admin tidak ada, redirect kembali ke home
+    # Jika session admin tidak ada, redirect kembali ke index
     if session.get('admin') is None:
-        return redirect(url_for('home'))
+        return redirect(url_for('index'))
     # Jika metodenya adalah get, tampilkan halaman insert
     if request.method == 'GET':
         return render_template("Views/admin/insert.html")
@@ -53,9 +53,9 @@ def insert():
 # Routing untuk halaman update
 @blueprint.route('/update/<id>', methods=['GET', 'POST'])
 def update(id):
-    # Jika session admin tidak ada, redirect kembali ke home
+    # Jika session admin tidak ada, redirect kembali ke index
     if session.get('admin') is None:
-        return redirect(url_for('home'))
+        return redirect(url_for('index'))
     # Jika metodenya adalah get, tampilkan halaman update
     if request.method == 'GET':
         return render_template("Views/admin/update.html", admin=AdminController.get_by_id(id))
@@ -75,9 +75,9 @@ def update(id):
 # Routing untuk halaman delete
 @blueprint.route('/delete/<id>', methods=['POST'])
 def delete(id):
-    # Jika session admin tidak ada, redirect kembali ke home
+    # Jika session admin tidak ada, redirect kembali ke index
     if session.get('admin') is None:
-        return redirect(url_for('home'))
+        return redirect(url_for('index'))
 
     # Hapus data tersebut dari database
     AdminController.delete(id)

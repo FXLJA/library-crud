@@ -7,18 +7,20 @@
     <!-- Page Heading -->
     <div class="d-sm-flex align-items-center justify-content-between mb-4">
         <h1 class="h3 mb-0 text-gray-800">User</h1>
+        <a class="btn btn-success" href="{{ url_for('user.insert') }}" style="width: 6rem;">Add</a>
     </div>
+
+    {% if message %}
+    <p style="color:red; text-align: center;">
+        <b>{{ message }}</b>
+    </p>
+    {% endif %}
 
     {% if list_user | length < 1 %}
     <div class="d-flex align-items-center justify-content-center" style="height: 60vh;">
         <p class="h1 mb-4 font-weight-bold">No User Created</p>
     </div>
     {% else %}
-    <div class="row mb-4">
-        <div class="col-12 d-flex align-items-center justify-content-start">
-            <a class="btn btn-success" href="{{ url_for('user.insert') }}" style="width: 6rem;">Add</a>
-        </div>
-    </div>
 
     <div class="row">
         <div class="col-12">

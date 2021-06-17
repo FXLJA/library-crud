@@ -7,6 +7,7 @@ from flask import render_template
 
 from Models.book import Book
 from Controllers.book_controller import BookController
+from Controllers.borrow_controller import BorrowController
 from Controllers.category_controller import CategoryController
 
 # Insialisasi Blueprint dengan url_prefix book
@@ -17,20 +18,23 @@ blueprint = Blueprint("book", __name__, url_prefix="/admin/book")
 @blueprint.route('/')
 @blueprint.route('/view')
 def view():
-    # Jika session admin tidak ada, redirect kembali ke home
+    # Jika session admin tidak ada, redirect kembali ke index
     if session.get('admin') is None:
-        return redirect(url_for('home'))
-    # Jika session admin ada, tampilkan halaman view
+        return redirect(url_for('index'))
+    message = None
+    if session.get('error'):
+        message = session["error"]
+        session["error"] = None
     return render_template("admin/book/view.html", list_book=BookController.get_all(),
-                           list_category=CategoryController.get_all())
+                           list_category=CategoryController.get_all(), message=message)
 
 
 # Routing untuk halaman insert
 @blueprint.route('/insert', methods=['GET', 'POST'])
 def insert():
-    # Jika session admin tidak ada, redirect kembali ke home
+    # Jika session admin tidak ada, redirect kembali ke index
     if session.get('admin') is None:
-        return redirect(url_for('home'))
+        return redirect(url_for('index'))
     # Jika metodenya adalah get, tampilkan halaman insert
     if request.method == 'GET':
         return render_template("admin/book/insert.html", list_category=CategoryController.get_all())
@@ -60,9 +64,9 @@ def insert():
 # Routing untuk halaman update
 @blueprint.route('/update/<id>', methods=['GET', 'POST'])
 def update(id):
-    # Jika session admin tidak ada, redirect kembali ke home
+    # Jika session admin tidak ada, redirect kembali ke index
     if session.get('admin') is None:
-        return redirect(url_for('home'))
+        return redirect(url_for('index'))
     # Jika metodenya adalah get, tampilkan halaman update
     if request.method == 'GET':
         return render_template("admin/book/update.html", book=BookController.get_by_id(id),
@@ -87,9 +91,13 @@ def update(id):
 # Routing untuk halaman delete
 @blueprint.route('/delete/<id>', methods=['POST', 'GET'])
 def delete(id):
-    # Jika session admin tidak ada, redirect kembali ke home
+    # Jika session admin tidak ada, redirect kembali ke index
     if session.get('admin') is None:
-        return redirect(url_for('home'))
+        return redirect(url_for('index'))
+    for borrow in BorrowController.get_all():
+        if borrow.book_id == id:
+            session['error'] = 'Buku sedang dipinjam!'
+            return redirect(url_for('book.view'))
 
     # Hapus data tersebut dari database
     BookController.delete(id)

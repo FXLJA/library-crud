@@ -6,6 +6,7 @@ from flask import Blueprint
 from flask import render_template
 
 from Models.category import Category
+from Controllers.book_controller import BookController
 from Controllers.category_controller import CategoryController
 
 # Insialisasi Blueprint dengan url_prefix category
@@ -16,19 +17,22 @@ blueprint = Blueprint("category", __name__, url_prefix="/admin/category")
 @blueprint.route('/')
 @blueprint.route('/view')
 def view():
-    # Jika session admin tidak ada, redirect kembali ke home
+    # Jika session admin tidak ada, redirect kembali ke index
     if session.get('admin') is None:
-        return redirect(url_for('home'))
-    # Jika session admin ada, tampilkan halaman view
-    return render_template("admin/category/view.html", list_category=CategoryController.get_all())
+        return redirect(url_for('index'))
+    message = None
+    if session.get('error'):
+        message = session["error"]
+        session["error"] = None
+    return render_template("admin/category/view.html", list_category=CategoryController.get_all(), message=message)
 
 
 # Routing untuk halaman insert
 @blueprint.route('/insert', methods=['GET', 'POST'])
 def insert():
-    # Jika session admin tidak ada, redirect kembali ke home
+    # Jika session admin tidak ada, redirect kembali ke index
     if session.get('admin') is None:
-        return redirect(url_for('home'))
+        return redirect(url_for('index'))
     # Jika metodenya adalah get, tampilkan halaman insert
     if request.method == 'GET':
         return render_template("admin/category/insert.html")
@@ -53,9 +57,9 @@ def insert():
 # Routing untuk halaman update
 @blueprint.route('/update/<id>', methods=['GET', 'POST'])
 def update(id):
-    # Jika session admin tidak ada, redirect kembali ke home
+    # Jika session admin tidak ada, redirect kembali ke index
     if session.get('admin') is None:
-        return redirect(url_for('home'))
+        return redirect(url_for('index'))
     # Jika metodenya adalah get, tampilkan halaman update
     if request.method == 'GET':
         return render_template("admin/category/update.html", category=CategoryController.get_by_id(id))
@@ -75,9 +79,13 @@ def update(id):
 # Routing untuk halaman delete
 @blueprint.route('/delete/<id>', methods=['POST', 'GET'])
 def delete(id):
-    # Jika session admin tidak ada, redirect kembali ke home
+    # Jika session admin tidak ada, redirect kembali ke index
     if session.get('admin') is None:
-        return redirect(url_for('home'))
+        return redirect(url_for('index'))
+    for book in BookController.get_all():
+        if book.category_id == id:
+            session['error'] = 'Ada buku dalam kategori tersebut!'
+            return redirect(url_for('category.view'))
 
     # Hapus data tersebut dari database
     CategoryController.delete(id)

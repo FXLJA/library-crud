@@ -18,22 +18,24 @@ blueprint = Blueprint("user_borrow", __name__, url_prefix="/user/borrow")
 @blueprint.route('/')
 @blueprint.route('/view')
 def view():
-    # Jika session user tidak ada, redirect kembali ke home
-    if session.get('admin') is None:
-        return redirect(url_for('home'))
+    # Jika session user tidak ada, redirect kembali ke index
+    if session.get('curr_user') is None:
+        return redirect(url_for('index'))
     # Jika session user ada, tampilkan halaman view
-    return render_template("user/borrow/view.html", list_borrow=BorrowController.get_all(), list_book=BookController.get_all(), list_user=UserController.get_all())
+    return render_template("user/borrow/view.html", list_borrow=BorrowController.get_all(),
+                           list_book=BookController.get_all(), list_user=UserController.get_all())
 
 
 # Routing untuk halaman insert
 @blueprint.route('/insert', methods=['GET', 'POST'])
 def insert():
-    # Jika session user tidak ada, redirect kembali ke home
-    if session.get('admin') is None:
-        return redirect(url_for('home'))
+    # Jika session user tidak ada, redirect kembali ke index
+    if session.get('curr_user') is None:
+        return redirect(url_for('index'))
     # Jika metodenya adalah get, tampilkan halaman insert
     if request.method == 'GET':
-        return render_template("user/borrow/insert.html", list_book=BookController.get_all(), list_user=UserController.get_all())
+        return render_template("user/borrow/insert.html", list_book=BookController.get_all(),
+                               list_user=UserController.get_all())
 
     # Jika metodenya adalah post, dapatkan data dari post
     borrow_id = request.form['borrow_id']
@@ -46,7 +48,8 @@ def insert():
     # Cek apakah borrow_id sudah ada dalam database
     if BorrowController.get_by_id(borrow_id) is not None:
         # jika iya, tampilkan error message
-        return render_template('user/borrow/insert.html', message="borrow_id sudah pernah terdaftar!", list_book=BookController.get_all(), list_user=UserController.get_all())
+        return render_template('user/borrow/insert.html', message="borrow_id sudah pernah terdaftar!",
+                               list_book=BookController.get_all(), list_user=UserController.get_all())
 
     # Jika data sudah sesuai, masukan data tersebut ke dalam database melalui model
     borrow = Borrow(borrow_id, book_id, username, secret_key, borrow_date, return_date)
@@ -59,12 +62,13 @@ def insert():
 # Routing untuk halaman update
 @blueprint.route('/update/<id>', methods=['GET', 'POST'])
 def update(id):
-    # Jika session user tidak ada, redirect kembali ke home
-    if session.get('admin') is None:
-        return redirect(url_for('home'))
+    # Jika session user tidak ada, redirect kembali ke index
+    if session.get('curr_user') is None:
+        return redirect(url_for('index'))
     # Jika metodenya adalah get, tampilkan halaman update
     if request.method == 'GET':
-        return render_template("user/borrow/update.html", borrow=BorrowController.get_by_id(id), list_book=BookController.get_all(), list_user=UserController.get_all())
+        return render_template("user/borrow/update.html", borrow=BorrowController.get_by_id(id),
+                               list_book=BookController.get_all(), list_user=UserController.get_all())
 
     # Jika metodenya adalah post, dapatkan data dari post
     borrow_id = request.form['borrow_id']
@@ -85,9 +89,9 @@ def update(id):
 # Routing untuk halaman delete
 @blueprint.route('/delete/<id>', methods=['POST'])
 def delete(id):
-    # Jika session user tidak ada, redirect kembali ke home
-    if session.get('admin') is None:
-        return redirect(url_for('home'))
+    # Jika session user tidak ada, redirect kembali ke index
+    if session.get('curr_user') is None:
+        return redirect(url_for('index'))
 
     # Hapus data tersebut dari database
     BorrowController.delete(id)

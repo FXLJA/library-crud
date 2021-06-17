@@ -10,6 +10,12 @@
         <a class="btn btn-success" href="{{ url_for('category.insert') }}" style="width: 6rem;">Add</a>
     </div>
 
+    {% if message %}
+    <p style="color:red; text-align: center;">
+        <b>{{ message }}</b>
+    </p>
+    {% endif %}
+
     {% if list_category | length < 1 %}
     <div class="d-flex align-items-center justify-content-center" style="height: 60vh;">
         <p class="h1 mb-4 font-weight-bold">No Category Created</p>

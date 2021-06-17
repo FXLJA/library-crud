@@ -21,9 +21,9 @@ blueprint = Blueprint("borrow", __name__, url_prefix="/admin/borrow")
 @blueprint.route('/')
 @blueprint.route('/view')
 def view():
-    # Jika session admin tidak ada, redirect kembali ke home
+    # Jika session admin tidak ada, redirect kembali ke index
     if session.get('admin') is None:
-        return redirect(url_for('home'))
+        return redirect(url_for('index'))
     # Jika session admin ada, tampilkan halaman view
     return render_template("admin/borrow/view.html", list_borrow=BorrowController.get_all(), list_book=BookController.get_all(), list_user=UserController.get_all())
 
@@ -31,9 +31,9 @@ def view():
 # Routing untuk halaman insert
 @blueprint.route('/insert', methods=['GET', 'POST'])
 def insert():
-    # Jika session admin tidak ada, redirect kembali ke home
+    # Jika session admin tidak ada, redirect kembali ke index
     if session.get('admin') is None:
-        return redirect(url_for('home'))
+        return redirect(url_for('index'))
     # Jika metodenya adalah get, tampilkan halaman insert
     if request.method == 'GET':
         return render_template("admin/borrow/insert.html", list_book=BookController.get_all(), list_user=UserController.get_all())
@@ -56,9 +56,9 @@ def insert():
 # Routing untuk halaman update
 @blueprint.route('/update/<id>', methods=['GET', 'POST'])
 def update(id):
-    # Jika session admin tidak ada, redirect kembali ke home
+    # Jika session admin tidak ada, redirect kembali ke index
     if session.get('admin') is None:
-        return redirect(url_for('home'))
+        return redirect(url_for('index'))
     # Jika metodenya adalah get, tampilkan halaman update
     if request.method == 'GET':
         return render_template("admin/borrow/update.html", borrow=BorrowController.get_by_id(id), list_book=BookController.get_all(), list_user=UserController.get_all())
@@ -82,9 +82,9 @@ def update(id):
 # Routing untuk halaman delete
 @blueprint.route('/delete/<id>', methods=['POST', 'GET'])
 def delete(id):
-    # Jika session admin tidak ada, redirect kembali ke home
+    # Jika session admin tidak ada, redirect kembali ke index
     if session.get('admin') is None:
-        return redirect(url_for('home'))
+        return redirect(url_for('index'))
 
     # Hapus data tersebut dari database
     BorrowController.delete(id)

@@ -10,6 +10,12 @@
         <a class="btn btn-success" href="{{ url_for('book.insert') }}" style="width: 6rem;">Add</a>
     </div>
 
+    {% if message %}
+    <p style="color:red; text-align: center;">
+        <b>{{ message }}</b>
+    </p>
+    {% endif %}
+
     {% if list_book | length < 1 %}
     <div class="d-flex align-items-center justify-content-center" style="height: 60vh;">
         <p class="h1 mb-4 font-weight-bold">No Book Added</p>
@@ -41,9 +47,9 @@
                                 <td class="align-middle">{{ book.title }}</td>
                                 <td class="align-middle">{{ book.author }}</td>
                                 {% for category in list_category %}
-                                    {% if book.category_id == category.category_id %}
-                                        <td class="align-middle">{{ category.category_name }}</td>
-                                    {% endif %}
+                                {% if book.category_id == category.category_id %}
+                                <td class="align-middle">{{ category.category_name }}</td>
+                                {% endif %}
                                 {% endfor %}
                                 <td class="align-middle">{{ book.thumbnail }}</td>
                                 <td class="align-middle">{{ book.file_path }}</td>

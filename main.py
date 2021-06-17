@@ -83,7 +83,7 @@ def login():
         u = uc.get_by_id(username)
         a = AdminController.get_by_id(username)
 
-        if u is not None and check_password_hash(password, u.password):
+        if u is not None and check_password_hash(u.password, password):
             session.clear()
             session['curr_user'] = u.username
             return redirect(url_for('user_book.view'))

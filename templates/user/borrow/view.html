@@ -1,7 +1,5 @@
 {% extends "user/layout.html" %}
-
 {% block title %}Borrow{% endblock %}
-
 {% block nav_borrow %}active{% endblock nav_borrow %}
 
 {% block content %}
@@ -21,9 +19,6 @@
         <div class="col-12">
             <!-- DataTales Example -->
             <div class="card mb-4">
-                <div class="card-header py-3">
-                    <h6 class="m-0 font-weight-bold text-primary">DataTables Example</h6>
-                </div>
                 <div class="card-body">
                     <div class="table-responsive">
                         <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
@@ -38,8 +33,18 @@
                             <tbody>
                             {% for borrow in list_borrow %}
                             <tr>
+                                {% for book in list_book %}
+                                {% if book.book_id == borrow.book_id %}
                                 <td class="align-middle">{{ book.title }}</td>
+                                {% endif %}
+                                {% endfor %}
+
+                                {% for user in list_user %}
+                                {% if user.username == borrow.username %}
                                 <td class="align-middle">{{ user.name }}</td>
+                                {% endif %}
+                                {% endfor %}
+
                                 <td class="align-middle">{{ borrow.borrow_date }}</td>
                                 <td class="align-middle">{{ borrow.return_date }}</td>
                             </tr>

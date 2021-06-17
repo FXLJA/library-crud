@@ -1,10 +1,8 @@
 {% extends "admin/layout.html" %}
-
 {% block title %}Book{% endblock %}
-
 {% block nav_book %}active{% endblock nav_book %}
-
 {% block content %}
+
 <div class="container-fluid">
     <!-- Page Heading -->
     <div class="d-sm-flex align-items-center justify-content-between mb-4">
@@ -21,9 +19,6 @@
         <div class="col-12">
             <!-- DataTales Example -->
             <div class="card mb-4">
-                <div class="card-header py-3">
-                    <h6 class="m-0 font-weight-bold text-primary">DataTables Example</h6>
-                </div>
                 <div class="card-body">
                     <div class="table-responsive">
                         <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
@@ -39,37 +34,41 @@
                             </tr>
                             </thead>
                             <tbody>
+
                             {% for book in list_book %}
-                                <tr>
-                                    <td class="align-middle">{{ book.book_id }}</td>
-                                    <td class="align-middle">{{ book.title }}</td>
-                                    <td class="align-middle">{{ book.author }}</td>
-                                     {% for category in list_category %}
-                                        {% if book.category_id == category.category_id %}
-                                            <td class="align-middle">{{ category.category_name }}</td>
-                                        {% endif %}
-                                    {% endfor %}
-                                    <td class="align-middle">{{ book.thumbnail }}</td>
-                                    <td class="align-middle">{{ book.file_path }}</td>
-                                    <td>
-                                        <div class="d-flex flex-column justify-content-center">
-                                            <!-- Update -->
-                                            <a class="btn btn-warning btn-icon-split mx-2" href="{{ url_for('book.update', id=book.book_id) }}">
+                            <tr>
+                                <td class="align-middle">{{ book.book_id }}</td>
+                                <td class="align-middle">{{ book.title }}</td>
+                                <td class="align-middle">{{ book.author }}</td>
+                                {% for category in list_category %}
+                                {% if book.category_id == category.category_id %}
+                                <td class="align-middle">{{ category.category_name }}</td>
+                                {% endif %}
+                                {% endfor %}
+                                <td class="align-middle">{{ book.thumbnail }}</td>
+                                <td class="align-middle">{{ book.file_path }}</td>
+                                <td>
+                                    <div class="d-flex flex-column justify-content-center">
+                                        <!-- Update -->
+                                        <a class="btn btn-warning btn-icon-split mx-2"
+                                           href="{{ url_for('book.update', id=book.book_id) }}" style="width: 3rem;">
                                                 <span class="text">
                                                     <i class="fa fa-wrench" aria-hidden="true"></i>
                                                 </span>
-                                            </a>
-                                            <div class="m-2"></div>
-                                            <!-- Delete -->
-                                            <a class="btn btn-danger btn-icon-split mx-2" href="{{ url_for('book.delete', id=book.book_id) }}">
+                                        </a>
+                                        <div class="m-2"></div>
+                                        <!-- Delete -->
+                                        <a class="btn btn-danger btn-icon-split mx-2"
+                                           href="{{ url_for('book.delete', id=book.book_id) }}" style="width: 3rem;">
                                                 <span class="text">
                                                     <i class="fa fa-trash" aria-hidden="true"></i>
                                                 </span>
-                                            </a>
-                                        </div>
-                                    </td>
-                                </tr>
+                                        </a>
+                                    </div>
+                                </td>
+                            </tr>
                             {% endfor %}
+
                             </tbody>
                         </table>
                     </div>

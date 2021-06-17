@@ -1,55 +1,64 @@
 {% extends "base/nav_user.html" %}
-
 {% block title %}Book{% endblock %}
-
 {% block content %}
-    <div class="container my-5">
-        <h1>Book - Add</h1>
-    </div>
-    <div class="container my-5">
 
-        {% if list_category | length < 1 %}
-            <p>Tabel category Kosong! Tambah category terlebih dahulu!</p>
-        {% else %}
-            <form method="post">
-                <div class="form-group mt-3">
-                    <h5>Book id</h5>
-                    <input type="text" name="book_id" class="form-control" required>
-                </div>
-                <div class="form-group mt-3">
-                    <h5>Title</h5>
-                    <input type="text" name="title" class="form-control" required>
-                </div>
-                <div class="form-group mt-3">
-                    <h5>Author</h5>
-                    <input type="text" name="author" class="form-control" required>
-                </div>
-                <div class="form-group mt-3">
-                    <h5>Thumbnail</h5>
-                    <input type="text" name="thumbnail" class="form-control" required>
-                </div>
-                <div class="form-group mt-3">
-                    <h5>File path</h5>
-                    <input type="text" name="file_path" class="form-control" required>
-                </div>
-                <div class="form-group mt-3">
-                    <h5>Category</h5>
-                    <select name="category_id" required>
-                        {% for category in list_category %}
-                            <option value="{{ category.category_id }}">{{ category.category_name }}</option>
-                        {% endfor %}
-                    </select>
-                </div>
+<div class="container my-5">
+    <h1>Book - Add</h1>
+</div>
 
-                {% if message %}
-                    <div class="conatiner mt-3 text-danger">
-                        <h5>{{ message }}</h5>
-                    </div>
-                {% endif %}
-                <div class="form-group mt-3">
-                    <button type="submit" class="btn btn-primary">Submit</button>
-                </div>
-            </form>
+<div class="container my-5">
+
+    {% if list_category | length < 1 %}
+    <p>Tabel category Kosong! Tambah category terlebih dahulu!</p>
+    {% else %}
+
+    <form method="post">
+        <div class="form-group mt-3">
+            <h5>Book id</h5>
+            <input type="text" name="book_id" class="form-control" required>
+        </div>
+
+        <div class="form-group mt-3">
+            <h5>Title</h5>
+            <input type="text" name="title" class="form-control" required>
+        </div>
+
+        <div class="form-group mt-3">
+            <h5>Author</h5>
+            <input type="text" name="author" class="form-control" required>
+        </div>
+
+        <div class="form-group mt-3">
+            <h5>Thumbnail</h5>
+            <input type="text" name="thumbnail" class="form-control" required>
+        </div>
+
+        <div class="form-group mt-3">
+            <h5>File path</h5>
+            <input type="text" name="file_path" class="form-control" required>
+        </div>
+
+        <div class="form-group mt-3">
+            <h5>Category</h5>
+            <select name="category_id" required>
+
+                {% for category in list_category %}
+                <option value="{{ category.category_id }}">{{ category.category_name }}</option>
+                {% endfor %}
+
+            </select>
+        </div>
+
+        {% if message %}
+        <div class="conatiner mt-3 text-danger">
+            <h5>{{ message }}</h5>
+        </div>
         {% endif %}
-    </div>
+
+        <div class="form-group mt-3">
+            <button type="submit" class="btn btn-primary">Submit</button>
+        </div>
+    </form>
+    {% endif %}
+</div>
 {% endblock %}

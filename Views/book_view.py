@@ -3,7 +3,6 @@ from Controllers.book_controller import BookController
 from Models.book import Book
 from Controllers.category_controller import CategoryController
 
-
 # Insialisasi Blueprint dengan url_prefix book
 blueprint = Blueprint("book", __name__, url_prefix="/admin/book")
 
@@ -16,7 +15,8 @@ def view():
     if session.get('admin') is None:
         return redirect(url_for('home'))
     # Jika session admin ada, tampilkan halaman view
-    return render_template("admin/book/view.html", list_book=BookController.get_all(), list_category=CategoryController.get_all())
+    return render_template("admin/book/view.html", list_book=BookController.get_all(),
+                           list_category=CategoryController.get_all())
 
 
 # Routing untuk halaman insert
@@ -40,7 +40,8 @@ def insert():
     # Cek apakah book_id sudah ada dalam database
     if BookController.get_by_id(book_id) is not None:
         # jika iya, tampilkan error message
-        return render_template('admin/book/insert.html', message="book_id sudah pernah terdaftar!", list_category=CategoryController.get_all())
+        return render_template('admin/book/insert.html', message="book_id sudah pernah terdaftar!",
+                               list_category=CategoryController.get_all())
 
     # Jika data sudah sesuai, masukan data tersebut ke dalam database melalui model
     book = Book(book_id, title, author, thumbnail, file_path, category_id)
@@ -58,7 +59,8 @@ def update(id):
         return redirect(url_for('home'))
     # Jika metodenya adalah get, tampilkan halaman update
     if request.method == 'GET':
-        return render_template("admin/book/update.html", book=BookController.get_by_id(id), list_category=CategoryController.get_all())
+        return render_template("admin/book/update.html", book=BookController.get_by_id(id),
+                               list_category=CategoryController.get_all())
 
     # Jika metodenya adalah post, dapatkan data dari post
     book_id = request.form['book_id']

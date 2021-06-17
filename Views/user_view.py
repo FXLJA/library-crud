@@ -72,7 +72,7 @@ def update(id):
 
 
 # Routing untuk halaman delete
-@blueprint.route('/delete/<id>', methods=['POST'])
+@blueprint.route('/delete/<id>', methods=['GET', 'POST'])
 def delete(id):
     # Jika session admin tidak ada, redirect kembali ke home
     if session.get('admin') is None:

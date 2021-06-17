@@ -1,10 +1,8 @@
 {% extends "admin/layout.html" %}
-
 {% block title %}Category{% endblock %}
-
 {% block nav_categories %}active{% endblock nav_categories %}
-
 {% block content %}
+
 <div class="container-fluid">
     <!-- Page Heading -->
     <div class="d-sm-flex align-items-center justify-content-between mb-4">
@@ -21,9 +19,6 @@
         <div class="col-12">
             <!-- DataTales Example -->
             <div class="card mb-4">
-                <div class="card-header py-3">
-                    <h6 class="m-0 font-weight-bold text-primary">DataTables Example</h6>
-                </div>
                 <div class="card-body">
                     <div class="table-responsive">
                         <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
@@ -31,7 +26,7 @@
                             <tr>
                                 <th>ID</th>
                                 <th>Name</th>
-                                <th>Action</th>
+                                <th style="text-align:center;">Action</th>
                             </tr>
                             </thead>
                             <tbody>
@@ -39,21 +34,21 @@
                             <tr>
                                 <td class="align-middle">{{ category.category_id }}</td>
                                 <td class="align-middle">{{ category.category_name }}</td>
-                                <td>
-                                    <div class="d-flex flex-column align-items-center justify-content-center">
+                                <td width="10rem">
+                                    <div class="d-flex align-items-center justify-content-center">
                                         <!-- Update -->
-                                        <a class="btn btn-warning btn-icon-split mx-2"
+                                        <a class="btn btn-warning btn-icon-split"
                                            href="{{ url_for('category.update', id=category.category_id) }}"
-                                           style="width: 6rem;">
+                                           style="width: 3rem;">
                                             <span class="text">
                                                 <i class="fa fa-wrench" aria-hidden="true"></i>
                                             </span>
                                         </a>
                                         <div class="m-2"></div>
                                         <!-- Delete -->
-                                        <a class="btn btn-danger btn-icon-split mx-2"
+                                        <a class="btn btn-danger btn-icon-split"
                                            href="{{ url_for('category.delete', id=category.category_id) }}"
-                                           style="width: 6rem;">
+                                           style="width: 3rem;">
                                             <span class="text">
                                                 <i class="fa fa-trash" aria-hidden="true"></i>
                                             </span>

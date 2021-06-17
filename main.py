@@ -1,4 +1,3 @@
-from my_database import MyDatabase
 from flask import Flask
 from flask import url_for
 from flask import session
@@ -9,6 +8,7 @@ from werkzeug.security import check_password_hash
 from werkzeug.security import generate_password_hash
 
 import constants
+from my_database import MyDatabase
 
 from Models.user import User
 from Views import book_view
@@ -40,8 +40,7 @@ app.register_blueprint(borrow_view.blueprint)
 app.register_blueprint(category_view.blueprint)
 app.register_blueprint(admin_view.blueprint)
 
-
-#user blueprint
+# user blueprint
 app.register_blueprint(user_book_view.blueprint)
 app.register_blueprint(user_borrow_view.blueprint)
 
@@ -51,7 +50,7 @@ app.register_blueprint(user_borrow_view.blueprint)
 def index():
     bc = BookController()
     session['admin'] = 'admin'
-    return redirect(url_for('user_book.view'))
+    return redirect(url_for('login'))
 
 
 @app.route('/register', methods=['GET', 'POST'])
@@ -64,7 +63,7 @@ def register():
         uc = UserController()
 
         if uc.getByID(nim) is not None:
-            return render_template('register.html', message='ID already exists!')
+            return render_template('auth/sign-up.html', message='ID already exists!')
         u = User(nim, name, generate_password_hash(password), gender)
         uc.insert(u)
         session['curr_user'] = u.user_name
@@ -82,7 +81,7 @@ def login():
 
         u = uc.getByID(nim)
         if u is None or check_password_hash(u.password, password) is False:
-            return render_template('login.html', message='Invalid credentials!')
+            return render_template('auth/sign-in.html', message='Invalid credentials!')
         session['curr_user'] = u.user_name
         return redirect(url_for('user.view'))
     else:

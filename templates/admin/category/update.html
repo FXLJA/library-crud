@@ -1,32 +1,32 @@
 {% extends "base/nav_user.html" %}
-
 {% block title %}Category{% endblock %}
-
 {% block content %}
-    <div class="container my-5">
-        <h1>Category - Edit {{ category.category_id }}</h1>
-    </div>
-    <div class="container my-5">
 
-            <form method="post">
-                <div class="form-group mt-3">
-                    <h5>Category id</h5>
-                    <input type="text" name="category_id" class="form-control" value="{{ category.category_id }}" required>
-                </div>
-                <div class="form-group mt-3">
-                    <h5>Category name</h5>
-                    <input type="text" name="category_name" class="form-control" value="{{ category.category_name }}" required>
-                </div>
+<div class="container my-5">
+    <h1>Category - Edit {{ category.category_id }}</h1>
+</div>
 
-                {% if message %}
-                    <div class="conatiner mt-3 text-danger">
-                        <h5>{{ message }}</h5>
-                    </div>
-                {% endif %}
-                <div class="form-group mt-3">
-                    <button type="submit" class="btn btn-primary">Submit</button>
-                </div>
-            </form>
+<div class="container my-5">
+    <form method="post">
+        <div class="form-group mt-3">
+            <h5>Category id</h5>
+            <input type="text" name="category_id" class="form-control" value="{{ category.category_id }}" required>
+        </div>
 
-    </div>
+        <div class="form-group mt-3">
+            <h5>Category name</h5>
+            <input type="text" name="category_name" class="form-control" value="{{ category.category_name }}" required>
+        </div>
+
+        {% if message %}
+        <div class="conatiner mt-3 text-danger">
+            <h5>{{ message }}</h5>
+        </div>
+        {% endif %}
+
+        <div class="form-group mt-3">
+            <button type="submit" class="btn btn-primary">Submit</button>
+        </div>
+    </form>
+</div>
 {% endblock %}

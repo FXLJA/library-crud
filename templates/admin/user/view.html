@@ -1,10 +1,8 @@
 {% extends "admin/layout.html" %}
-
 {% block title %}User{% endblock %}
-
 {% block nav_user %}active{% endblock nav_user %}
-
 {% block content %}
+
 <div class="container-fluid">
     <!-- Page Heading -->
     <div class="d-sm-flex align-items-center justify-content-between mb-4">
@@ -17,10 +15,8 @@
     </div>
     {% else %}
     <div class="row mb-4">
-        <div class="col-12 d-flex align-items-center justify-content-around">
-            <a class="btn btn-success" href="admin_user-insert.html" style="width: 6rem;">Add</a>
-            <a class="btn btn-warning" href="" style="width: 6rem;">Update</a>
-            <a class="btn btn-danger" href=""style="width: 6rem;">Delete</a>
+        <div class="col-12 d-flex align-items-center justify-content-start">
+            <a class="btn btn-success" href="{{ url_for('user.insert') }}" style="width: 6rem;">Add</a>
         </div>
     </div>
 
@@ -28,19 +24,17 @@
         <div class="col-12">
             <!-- DataTales Example -->
             <div class="card mb-4">
-                <div class="card-header py-3">
-                    <h6 class="m-0 font-weight-bold text-primary">DataTables Example</h6>
-                </div>
                 <div class="card-body">
                     <div class="table-responsive">
                         <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
                             <thead>
-                                <tr>
-                                    <th>Username</th>
-                                    <th>Name</th>
-                                    <th>Gender</th>
-                                    <th>Password</th>
-                                </tr>
+                            <tr>
+                                <th>Username</th>
+                                <th>Name</th>
+                                <th>Gender</th>
+                                <th>Password</th>
+                                <th style="text-align: center">Action</th>
+                            </tr>
                             </thead>
                             <tbody>
                             {% for user in list_user %}
@@ -48,7 +42,28 @@
                                 <td>{{ user.username }}</td>
                                 <td>{{ user.name }}</td>
                                 <td>{{ user.gender }}</td>
-                                <td>{{ user.password }}</td>
+                                <td>
+                                    <span class="d-inline-block text-truncate" style="max-width: 100px">{{ user.password }}</span>
+                                </td>
+                                <td>
+                                    <div class="d-flex justify-content-center">
+                                        <!-- Update -->
+                                        <a class="btn btn-warning btn-icon-split mx-2"
+                                           href="{{ url_for('user.update', id=user.username) }}" style="width: 3rem;">
+                                                <span class="text">
+                                                    <i class="fa fa-wrench" aria-hidden="true"></i>
+                                                </span>
+                                        </a>
+                                        <div class="m-2"></div>
+                                        <!-- Delete -->
+                                        <a class="btn btn-danger btn-icon-split mx-2"
+                                           href="{{ url_for('user.delete', id=user.username) }}" style="width: 3rem;">
+                                                <span class="text">
+                                                    <i class="fa fa-trash" aria-hidden="true"></i>
+                                                </span>
+                                        </a>
+                                    </div>
+                                </td>
                             </tr>
                             {% endfor %}
                             </tbody>

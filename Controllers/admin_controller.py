@@ -9,7 +9,7 @@ class AdminController:
     def insert(admin):
         MyDatabase.execute_and_commit(
             "INSERT into admin VALUES(%s, %s)",
-            [ admin.username, admin.password ]
+            [admin.username, admin.password]
         )
 
     # Fungsi update digunakan untuk men-update data ke Tabel admin dalam database library_0082
@@ -17,7 +17,7 @@ class AdminController:
     def update(admin):
         MyDatabase.execute_and_commit(
             "UPDATE admin SET password=%s WHERE username=%s",
-            [ admin.password, admin.username]
+            [admin.password, admin.username]
         )
 
     # Fungsi delete digunakan untuk menghapus data dari Tabel admin dalam database library_0082 berdasarkan username
@@ -25,7 +25,7 @@ class AdminController:
     def delete(username):
         MyDatabase.execute_and_commit(
             "DELETE FROM admin where username=%s",
-            [ username ]
+            [username]
         )
 
     # Fungsi get_all digunakan untuk menerima semua data dari Tabel admin dalam database library_0082
@@ -36,7 +36,7 @@ class AdminController:
         # Setiap hasil data admin dari database library_0082 disimpan ke dalam model admin
         list_admin = []
         for admin in hasil:
-            list_admin += [ Admin(*admin) ]
+            list_admin += [Admin(*admin)]
 
         return list_admin
 
@@ -45,7 +45,7 @@ class AdminController:
     def get_by_id(username):
         hasil = MyDatabase.query(
             "SELECT * FROM admin where username=%s",
-            [ username ]
+            [username]
         )
 
         m = None

@@ -9,7 +9,7 @@ class CategoryController:
     def insert(category):
         MyDatabase.execute_and_commit(
             "INSERT into category VALUES(%s, %s)",
-            [ category.category_id, category.category_name ]
+            [category.category_id, category.category_name]
         )
 
     # Fungsi update digunakan untuk men-update data ke Tabel category dalam database library_0082
@@ -17,7 +17,7 @@ class CategoryController:
     def update(category):
         MyDatabase.execute_and_commit(
             "UPDATE category SET category_name=%s WHERE category_id=%s",
-            [ category.category_name, category.category_id]
+            [category.category_name, category.category_id]
         )
 
     # Fungsi delete digunakan untuk menghapus data dari Tabel category dalam database library_0082 berdasarkan category_id
@@ -25,7 +25,7 @@ class CategoryController:
     def delete(category_id):
         MyDatabase.execute_and_commit(
             "DELETE FROM category where category_id=%s",
-            [ category_id ]
+            [category_id]
         )
 
     # Fungsi get_all digunakan untuk menerima semua data dari Tabel category dalam database library_0082
@@ -36,7 +36,7 @@ class CategoryController:
         # Setiap hasil data category dari database library_0082 disimpan ke dalam model category
         list_category = []
         for category in hasil:
-            list_category += [ Category(*category) ]
+            list_category += [Category(*category)]
 
         return list_category
 
@@ -45,7 +45,7 @@ class CategoryController:
     def get_by_id(category_id):
         hasil = MyDatabase.query(
             "SELECT * FROM category where category_id=%s",
-            [ category_id ]
+            [category_id]
         )
 
         m = None

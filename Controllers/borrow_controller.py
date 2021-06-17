@@ -9,7 +9,8 @@ class BorrowController:
     def insert(borrow):
         MyDatabase.execute_and_commit(
             "INSERT into borrow VALUES(%s, %s, %s, %s, %s, %s)",
-            [ borrow.borrow_id, borrow.book_id, borrow.username, borrow.secret_key, borrow.borrow_date, borrow.return_date ]
+            [borrow.borrow_id, borrow.book_id, borrow.username, borrow.secret_key, borrow.borrow_date,
+             borrow.return_date]
         )
 
     # Fungsi update digunakan untuk men-update data ke Tabel borrow dalam database library_0082
@@ -17,7 +18,8 @@ class BorrowController:
     def update(borrow):
         MyDatabase.execute_and_commit(
             "UPDATE borrow SET book_id=%s, username=%s, secret_key=%s, borrow_date=%s, return_date=%s WHERE borrow_id=%s",
-            [ borrow.book_id, borrow.username, borrow.secret_key, borrow.borrow_date, borrow.return_date, borrow.borrow_id]
+            [borrow.book_id, borrow.username, borrow.secret_key, borrow.borrow_date, borrow.return_date,
+             borrow.borrow_id]
         )
 
     # Fungsi delete digunakan untuk menghapus data dari Tabel borrow dalam database library_0082 berdasarkan borrow_id
@@ -25,7 +27,7 @@ class BorrowController:
     def delete(borrow_id):
         MyDatabase.execute_and_commit(
             "DELETE FROM borrow where borrow_id=%s",
-            [ borrow_id ]
+            [borrow_id]
         )
 
     # Fungsi get_all digunakan untuk menerima semua data dari Tabel borrow dalam database library_0082
@@ -36,7 +38,7 @@ class BorrowController:
         # Setiap hasil data borrow dari database library_0082 disimpan ke dalam model borrow
         list_borrow = []
         for borrow in hasil:
-            list_borrow += [ Borrow(*borrow) ]
+            list_borrow += [Borrow(*borrow)]
 
         return list_borrow
 
@@ -45,7 +47,7 @@ class BorrowController:
     def get_by_id(borrow_id):
         hasil = MyDatabase.query(
             "SELECT * FROM borrow where borrow_id=%s",
-            [ borrow_id ]
+            [borrow_id]
         )
 
         m = None

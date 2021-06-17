@@ -17,6 +17,7 @@ from Views.UserViews import user_borrow_view
 
 from Controllers.book_controller import BookController
 from Controllers.user_controller import UserController
+from Controllers.admin_controller import AdminController
 from Controllers.borrow_controller import BorrowController
 
 from Views.AdminViews import user_view
@@ -50,8 +51,6 @@ app.register_blueprint(user_borrow_view.blueprint)
 @app.route('/')
 @app.route('/index')
 def index():
-    bc = BookController()
-    session['admin'] = 'admin'
     return redirect(url_for('login'))
 
 
@@ -82,10 +81,18 @@ def login():
         uc = UserController()
 
         u = uc.get_by_id(username)
-        if u is None or check_password_hash(u.password, password) is False:
+        a = AdminController.get_by_id(username)
+
+        if u is not None and check_password_hash(password, u.password):
+            session.clear()
+            session['curr_user'] = u.username
+            return redirect(url_for('user_book.view'))
+        elif a is not None and password == a.password:
+            session.clear()
+            session['admin'] = a.username
+            return redirect(url_for('user.view'))
+        else:
             return render_template('auth/sign-in.html', message='Invalid credentials!')
-        session['curr_user'] = u.username
-        return redirect(url_for('user_book.view'))
     else:
         return render_template('auth/sign-in.html')
 

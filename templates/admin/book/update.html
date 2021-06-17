@@ -38,10 +38,12 @@
 
                 <div class="form-group">
                     <label>Category</label>
-                    <select class="form-control"  name="category_id" required>
-                    {% for category in list_category %}
-                        <option value="{{ category.category_id }}" {% if book.category_id== category.category_id %}selected{% endif %}>{{ category.category_name }}</option>
-                    {% endfor %}
+                    <select class="form-control" name="category_id" required>
+                        {% for category in list_category %}
+                        <option value="{{ category.category_id }}" {% if book.category_id== category.category_id
+                                %}selected{% endif %}>{{ category.category_name }}
+                        </option>
+                        {% endfor %}
                     </select>
                 </div>
 

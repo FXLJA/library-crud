@@ -63,7 +63,7 @@ def insert():
                                list_category=CategoryController.get_all())
 
     if not allowed_file(thumbnail.filename, THUMBNAIL_EXTENSION):
-        return render_template('user/book/insert.html', message="Ekstensi thumbnail salah!",
+        return render_template('admin/book/insert.html', message="Ekstensi thumbnail salah!",
                                list_category=CategoryController.get_all())
 
     if not allowed_file(file_buku.filename, FILE_EXTENSION):
@@ -77,8 +77,8 @@ def insert():
     file_buku.save(os.path.join('./static/books', book_id, secure_filename(file_buku.filename)))
 
     # Jika data sudah sesuai, masukan data tersebut ke dalam database melalui model
-    book = Book(book_id, title, author, secure_filename(thumbnail.filename), secure_filename(file_buku.filename),
-                category_id)
+    book = Book(book_id, title, author, 'thumbnails/' + book_id + '/' + secure_filename(thumbnail.filename),
+                'books/' + book_id + '/' + secure_filename(file_buku.filename), category_id)
     BookController.insert(book)
 
     # Redirect ke halaman view

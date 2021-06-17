@@ -11,11 +11,6 @@ import constants
 from my_database import MyDatabase
 
 from Models.user import User
-from Views import book_view
-from Views import user_view
-from Views import admin_view
-from Views import borrow_view
-from Views import category_view
 
 from Views.UserViews import user_book_view
 from Views.UserViews import user_borrow_view
@@ -23,6 +18,12 @@ from Views.UserViews import user_borrow_view
 from Controllers.book_controller import BookController
 from Controllers.user_controller import UserController
 from Controllers.borrow_controller import BorrowController
+
+from Views.AdminViews import user_view
+from Views.AdminViews import book_view
+from Views.AdminViews import admin_view
+from Views.AdminViews import borrow_view
+from Views.AdminViews import category_view
 
 app = Flask(__name__)
 app.secret_key = constants.SECRET_KEY
